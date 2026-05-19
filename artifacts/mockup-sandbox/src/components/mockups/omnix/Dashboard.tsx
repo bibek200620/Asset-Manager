@@ -18,7 +18,7 @@ import {
 
 // Mock Data
 const keyMetrics = [
-  { id: "conversations", label: "AI Conversations", value: 124, trend: "+12%", icon: MessageSquare, color: "var(--omnix-purple)", glow: "var(--omnix-purple-bright)" },
+  { id: "conversations", label: "AI Conversations", value: 124, trend: "+12%", icon: MessageSquare, color: "var(--omnix-cyan)", glow: "var(--omnix-cyan)" },
   { id: "active_members", label: "Team Online", value: 8, trend: "4 idle", icon: Users, color: "var(--omnix-cyan)", glow: "var(--omnix-cyan)" },
   { id: "sources", label: "Knowledge Sources", value: 843, trend: "+24 this week", icon: Database, color: "var(--omnix-pink)", glow: "var(--omnix-pink)" },
   { id: "compute", label: "AI Compute", value: "94%", trend: "Optimal", icon: Cpu, color: "var(--omnix-green)", glow: "var(--omnix-green)" },
@@ -26,7 +26,7 @@ const keyMetrics = [
 
 const quickActions = [
   { label: "Analyze Document", icon: FileText, desc: "Extract insights from PDF/Doc", color: "var(--omnix-blue)" },
-  { label: "Generate Report", icon: Sparkles, desc: "Weekly metrics & synthesis", color: "var(--omnix-purple)" },
+  { label: "Generate Report", icon: Sparkles, desc: "Weekly metrics & synthesis", color: "var(--omnix-cyan)" },
   { label: "Deep Research", icon: BrainCircuit, desc: "Multi-step web search", color: "var(--omnix-pink)" },
   { label: "Team Sync", icon: Users, desc: "Summarize slack/emails", color: "var(--omnix-cyan)" },
 ];
@@ -42,7 +42,7 @@ const teamActivity = [
   { id: 1, user: "Sarah Jenkins", role: "Co-owner", roleColor: "var(--omnix-pink)", action: "connected a new data source", target: "Stripe API v2", time: "5m ago", avatar: "S" },
   { id: 2, user: "Mike Ross", role: "Member", roleColor: "var(--omnix-blue)", action: "generated a report", target: "Q3 Financials", time: "12m ago", avatar: "M" },
   { id: 3, user: "Elena Rodriguez", role: "Member", roleColor: "var(--omnix-blue)", action: "started a deep research session", target: "Web3 Trends", time: "1h ago", avatar: "E" },
-  { id: 4, user: "Alex Chen", role: "Founder", roleColor: "var(--omnix-purple-bright)", action: "updated workspace settings", target: "Model defaults", time: "2h ago", avatar: "A" },
+  { id: 4, user: "Alex Chen", role: "Founder", roleColor: "var(--omnix-cyan)", action: "updated workspace settings", target: "Model defaults", time: "2h ago", avatar: "A" },
 ];
 
 export function Dashboard() {
@@ -67,7 +67,7 @@ export function Dashboard() {
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2" style={{ fontFamily: "var(--omnix-font-display)" }}>
-                <Sparkles className="w-5 h-5 text-indigo-400" />
+                <Sparkles className="w-5 h-5 text-[#00FFFF]" />
                 Workspace Overview
               </h1>
               <p className="text-sm mt-1" style={{ color: "var(--omnix-text-2)" }}>
@@ -90,7 +90,7 @@ export function Dashboard() {
                 e.currentTarget.style.borderColor = "var(--omnix-border)";
               }}
             >
-              <Activity className="w-4 h-4 text-indigo-400" />
+              <Activity className="w-4 h-4 text-[#00FFFF]" />
               View Full Report
             </button>
           </div>
@@ -186,7 +186,7 @@ export function Dashboard() {
                         <action.icon className="w-5 h-5" style={{ color: action.color }} />
                       </div>
                       <div>
-                        <div className="text-sm font-medium text-white mb-0.5 group-hover:text-indigo-200 transition-colors">
+                        <div className="text-sm font-medium text-white mb-0.5 group-hover:text-[#00e8e8] transition-colors">
                           {action.label}
                         </div>
                         <div className="text-xs" style={{ color: "var(--omnix-text-3)" }}>
@@ -209,10 +209,10 @@ export function Dashboard() {
               >
                 <div className="flex items-center justify-between mb-6">
                   <h2 className="text-lg font-semibold text-white flex items-center gap-2">
-                    <History className="w-4 h-4 text-indigo-400" />
+                    <History className="w-4 h-4 text-[#00FFFF]" />
                     Recent AI Sessions
                   </h2>
-                  <button className="text-xs font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
+                  <button className="text-xs font-medium text-[#00FFFF] hover:text-[#00cccc] transition-colors">
                     View All →
                   </button>
                 </div>
@@ -232,7 +232,7 @@ export function Dashboard() {
                       }}
                     >
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full flex items-center justify-center bg-indigo-500/10 text-indigo-400">
+                        <div className="w-8 h-8 rounded-full flex items-center justify-center bg-[rgba(0,255,255,0.08)] text-[#00FFFF]">
                           <MessageSquare className="w-4 h-4" />
                         </div>
                         <div>
@@ -299,10 +299,10 @@ export function Dashboard() {
                   <div>
                     <div className="flex justify-between text-sm mb-2">
                       <span style={{ color: "var(--omnix-text-2)" }}>Compute Credits</span>
-                      <span className="text-indigo-400 font-medium">45%</span>
+                      <span className="text-[#00FFFF] font-medium">45%</span>
                     </div>
                     <div className="w-full h-1.5 rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.1)" }}>
-                      <div className="h-full rounded-full w-[45%]" style={{ background: "var(--omnix-purple)", boxShadow: "0 0 10px var(--omnix-purple)" }} />
+                      <div className="h-full rounded-full w-[45%]" style={{ background: "var(--omnix-cyan)", boxShadow: "0 0 10px var(--omnix-cyan)" }} />
                     </div>
                   </div>
                 </div>
@@ -347,7 +347,7 @@ export function Dashboard() {
                         <div className="text-sm mb-0.5">
                           <span className="font-medium text-white">{activity.user}</span>
                           <span style={{ color: "var(--omnix-text-3)" }}> {activity.action} </span>
-                          <span className="font-medium text-indigo-300">{activity.target}</span>
+                          <span className="font-medium text-[#00cccc]">{activity.target}</span>
                         </div>
                         <div className="flex items-center gap-2 text-xs">
                           <span 

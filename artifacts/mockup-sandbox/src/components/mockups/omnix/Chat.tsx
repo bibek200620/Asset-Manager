@@ -32,10 +32,10 @@ export function Chat() {
                 <span>Pinned</span>
               </div>
               <div className="space-y-1">
-                <button className="w-full flex flex-col gap-1 p-3 rounded-[var(--omnix-radius-sm)] bg-[rgba(99,102,241,0.1)] border border-[rgba(99,102,241,0.2)] text-left hover:bg-[rgba(99,102,241,0.15)] transition-all shadow-[var(--omnix-glow-sm)]">
+                <button className="w-full flex flex-col gap-1 p-3 rounded-[var(--omnix-radius-sm)] bg-[rgba(99,102,241,0.1)] border border-[rgba(99,102,241,0.2)] text-left hover:bg-[rgba(0,255,255,0.10)] transition-all shadow-[var(--omnix-glow-sm)]">
                   <div className="flex items-center justify-between w-full">
                     <span className="text-sm font-medium text-[var(--omnix-text)] truncate pr-2">Q3 Product Launch</span>
-                    <span className="text-[10px] text-[var(--omnix-purple-bright)]">Now</span>
+                    <span className="text-[10px] text-[var(--omnix-cyan)]">Now</span>
                   </div>
                   <span className="text-xs text-[var(--omnix-text-2)] truncate w-full">AI: Based on the competitor analysis...</span>
                 </button>
@@ -82,7 +82,7 @@ export function Chat() {
           {/* Top header for the current chat */}
           <div className="h-[60px] shrink-0 border-b border-[var(--omnix-border)] bg-[rgba(6,8,16,0.8)] backdrop-blur-md flex items-center justify-between px-6 z-20">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-[rgba(99,102,241,0.15)] flex items-center justify-center text-[var(--omnix-purple-bright)] border border-[rgba(99,102,241,0.3)] shadow-[var(--omnix-glow-sm)]">
+              <div className="w-8 h-8 rounded-lg bg-[rgba(0,255,255,0.10)] flex items-center justify-center text-[var(--omnix-cyan)] border border-[rgba(0,255,255,0.2)] shadow-[var(--omnix-glow-sm)]">
                 <Hash className="w-4 h-4" />
               </div>
               <div>
@@ -95,7 +95,7 @@ export function Chat() {
             </div>
             <div className="flex items-center gap-4">
               <div className="flex -space-x-2">
-                <div className="w-7 h-7 rounded-full border-2 border-[var(--omnix-bg)] bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-[10px] font-bold text-white z-30">A</div>
+                <div className="w-7 h-7 rounded-full border-2 border-[var(--omnix-bg)] bg-gradient-to-br from-[#00FFFF] to-[#0066ff] flex items-center justify-center text-[10px] font-bold text-white z-30">A</div>
                 <div className="w-7 h-7 rounded-full border-2 border-[var(--omnix-bg)] bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-[10px] font-bold text-white z-20">E</div>
                 <div className="w-7 h-7 rounded-full border-2 border-[var(--omnix-bg)] bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-[10px] font-bold text-white z-10">M</div>
               </div>
@@ -117,7 +117,7 @@ export function Chat() {
 
             {/* Human Message 1 */}
             <div className="flex gap-4 animate-[omnix-slide-in_0.3s_ease]">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-sm font-bold text-white shrink-0 shadow-lg shadow-indigo-500/20 mt-1">A</div>
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#00FFFF] to-[#0066ff] flex items-center justify-center text-sm font-bold text-white shrink-0 shadow-lg shadow-indigo-500/20 mt-1">A</div>
               <div className="flex-1 max-w-3xl">
                 <div className="flex items-center gap-2 mb-1">
                   <span className="font-semibold text-sm text-[var(--omnix-text)]">Alex Chen</span>
@@ -147,15 +147,15 @@ export function Chat() {
 
             {/* AI Message */}
             <div className="flex gap-4 animate-[omnix-slide-in_0.5s_ease]">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#6366f1] to-[#a855f7] flex items-center justify-center text-white shrink-0 shadow-[var(--omnix-glow-md)] mt-1 relative overflow-hidden">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#00FFFF] to-[#0055ff] flex items-center justify-center text-white shrink-0 shadow-[var(--omnix-glow-md)] mt-1 relative overflow-hidden">
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
                 <Sparkles className="w-5 h-5 relative z-10" />
               </div>
               <div className="flex-1 max-w-4xl">
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="font-semibold text-sm text-[var(--omnix-purple-bright)] font-[var(--omnix-font-display)] tracking-wide flex items-center gap-1.5">
+                  <span className="font-semibold text-sm text-[var(--omnix-cyan)] font-[var(--omnix-font-display)] tracking-wide flex items-center gap-1.5">
                     Omnix AI
-                    <div className="w-1.5 h-1.5 rounded-full bg-[var(--omnix-purple-bright)] animate-pulse shadow-[0_0_8px_var(--omnix-purple-bright)]"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-[var(--omnix-cyan)] animate-pulse shadow-[0_0_8px_var(--omnix-cyan)]"></div>
                   </span>
                   <span className="text-xs text-[var(--omnix-text-3)] ml-2">10:26 AM</span>
                 </div>
@@ -163,13 +163,13 @@ export function Chat() {
                 {/* AI Glassmorphism Card */}
                 <div className="bg-[var(--omnix-surface)] border border-[var(--omnix-border)] rounded-2xl p-5 shadow-[var(--omnix-glow-sm)] relative overflow-hidden backdrop-blur-md">
                   {/* Subtle top glow line */}
-                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--omnix-purple)] to-transparent opacity-50"></div>
+                  <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[var(--omnix-cyan)] to-transparent opacity-50"></div>
                   
-                  <div className="prose prose-invert max-w-none text-[15px] leading-relaxed font-light text-[var(--omnix-text-2)] prose-headings:text-[var(--omnix-text)] prose-headings:font-[var(--omnix-font-display)] prose-headings:font-semibold prose-a:text-[var(--omnix-purple-bright)] prose-strong:text-[var(--omnix-text)]">
+                  <div className="prose prose-invert max-w-none text-[15px] leading-relaxed font-light text-[var(--omnix-text-2)] prose-headings:text-[var(--omnix-text)] prose-headings:font-[var(--omnix-font-display)] prose-headings:font-semibold prose-a:text-[var(--omnix-cyan)] prose-strong:text-[var(--omnix-text)]">
                     <p>I've analyzed the recent market data for the premium segment, focusing on <strong>Nexus</strong> and <strong>Zenith</strong> as requested. Here is the synthesized competitive landscape for Q3.</p>
                     
                     <h3 className="text-lg mt-6 mb-3 flex items-center gap-2">
-                      <div className="w-1 h-4 bg-[var(--omnix-purple)] rounded-full"></div>
+                      <div className="w-1 h-4 bg-[var(--omnix-cyan)] rounded-full"></div>
                       Pricing Tier Comparison
                     </h3>
                     
@@ -194,7 +194,7 @@ export function Chat() {
                             <td className="px-4 py-3">$249/mo (Dedicated Support)</td>
                           </tr>
                           <tr>
-                            <td className="px-4 py-3 font-medium text-[var(--omnix-purple-bright)]">Our Q3 Target</td>
+                            <td className="px-4 py-3 font-medium text-[var(--omnix-cyan)]">Our Q3 Target</td>
                             <td className="px-4 py-3 text-[var(--omnix-text)]">$45/mo</td>
                             <td className="px-4 py-3 text-[var(--omnix-text)]">$150/mo</td>
                           </tr>
@@ -227,7 +227,7 @@ export function Chat() {
                         <Copy className="w-4 h-4" />
                       </button>
                       <div className="text-[var(--omnix-text-3)] mb-2 text-xs">// Suggested positioning statement</div>
-                      <div className="text-[#a855f7]">const</div> <div className="text-[#3b82f6] inline">positioning</div> <div className="text-[#e2e8f0] inline">=</div> <div className="text-[#22c55e] inline">"Enterprise-grade capabilities without the enterprise overhead. Visual workspaces built for modern speed."</div><div className="text-[#e2e8f0] inline">;</div>
+                      <div className="text-[#0088ff]">const</div> <div className="text-[#3b82f6] inline">positioning</div> <div className="text-[#e2e8f0] inline">=</div> <div className="text-[#22c55e] inline">"Enterprise-grade capabilities without the enterprise overhead. Visual workspaces built for modern speed."</div><div className="text-[#e2e8f0] inline">;</div>
                     </div>
                   </div>
 
@@ -276,9 +276,9 @@ export function Chat() {
               </div>
               <div className="flex-1 max-w-4xl pt-2">
                 <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 rounded-full bg-[var(--omnix-purple-bright)] animate-bounce" style={{ animationDelay: "0ms" }}></div>
-                  <div className="w-2 h-2 rounded-full bg-[var(--omnix-purple-bright)] animate-bounce" style={{ animationDelay: "150ms" }}></div>
-                  <div className="w-2 h-2 rounded-full bg-[var(--omnix-purple-bright)] animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                  <div className="w-2 h-2 rounded-full bg-[var(--omnix-cyan)] animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                  <div className="w-2 h-2 rounded-full bg-[var(--omnix-cyan)] animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                  <div className="w-2 h-2 rounded-full bg-[var(--omnix-cyan)] animate-bounce" style={{ animationDelay: "300ms" }}></div>
                   <span className="text-xs text-[var(--omnix-text-3)] ml-2 font-medium">Generating interface mockup...</span>
                 </div>
               </div>
@@ -293,7 +293,7 @@ export function Chat() {
               {/* Floating Action Bar (above input) */}
               <div className="absolute -top-10 left-0 flex gap-2">
                 <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--omnix-surface)] border border-[var(--omnix-border)] text-xs text-[var(--omnix-text-2)] hover:bg-[rgba(255,255,255,0.08)] hover:text-[var(--omnix-text)] transition-colors backdrop-blur-md">
-                  <Sparkles className="w-3.5 h-3.5 text-[var(--omnix-purple-bright)]" />
+                  <Sparkles className="w-3.5 h-3.5 text-[var(--omnix-cyan)]" />
                   Suggest ideas
                 </button>
                 <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[var(--omnix-surface)] border border-[var(--omnix-border)] text-xs text-[var(--omnix-text-2)] hover:bg-[rgba(255,255,255,0.08)] hover:text-[var(--omnix-text)] transition-colors backdrop-blur-md">
@@ -365,7 +365,7 @@ export function Chat() {
                 Referenced Documents
               </h4>
               <div className="space-y-2">
-                <div className="p-3 rounded-xl bg-[var(--omnix-surface)] border border-[var(--omnix-border)] group hover:border-[rgba(99,102,241,0.3)] transition-colors cursor-pointer relative overflow-hidden">
+                <div className="p-3 rounded-xl bg-[var(--omnix-surface)] border border-[var(--omnix-border)] group hover:border-[rgba(0,255,255,0.2)] transition-colors cursor-pointer relative overflow-hidden">
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--omnix-blue)]"></div>
                   <div className="flex items-start justify-between">
                     <div>
@@ -376,7 +376,7 @@ export function Chat() {
                   </div>
                 </div>
                 
-                <div className="p-3 rounded-xl bg-[var(--omnix-surface)] border border-[var(--omnix-border)] group hover:border-[rgba(99,102,241,0.3)] transition-colors cursor-pointer relative overflow-hidden">
+                <div className="p-3 rounded-xl bg-[var(--omnix-surface)] border border-[var(--omnix-border)] group hover:border-[rgba(0,255,255,0.2)] transition-colors cursor-pointer relative overflow-hidden">
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--omnix-pink)]"></div>
                   <div className="flex items-start justify-between">
                     <div>
@@ -396,7 +396,7 @@ export function Chat() {
                 Web Sources
               </h4>
               <div className="space-y-2">
-                <div className="p-3 rounded-xl bg-[var(--omnix-surface)] border border-[var(--omnix-border)] group hover:border-[rgba(99,102,241,0.3)] transition-colors cursor-pointer relative overflow-hidden">
+                <div className="p-3 rounded-xl bg-[var(--omnix-surface)] border border-[var(--omnix-border)] group hover:border-[rgba(0,255,255,0.2)] transition-colors cursor-pointer relative overflow-hidden">
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-[var(--omnix-green)]"></div>
                   <div className="flex items-start justify-between">
                     <div>
@@ -409,8 +409,8 @@ export function Chat() {
             </div>
 
             {/* Project Context */}
-            <div className="p-4 rounded-xl bg-[rgba(99,102,241,0.05)] border border-[rgba(99,102,241,0.15)]">
-              <h4 className="text-xs font-semibold text-[var(--omnix-purple-bright)] mb-2 flex items-center gap-2">
+            <div className="p-4 rounded-xl bg-[rgba(99,102,241,0.05)] border border-[rgba(0,255,255,0.10)]">
+              <h4 className="text-xs font-semibold text-[var(--omnix-cyan)] mb-2 flex items-center gap-2">
                 <Hash className="w-3.5 h-3.5" />
                 Workspace Metadata
               </h4>

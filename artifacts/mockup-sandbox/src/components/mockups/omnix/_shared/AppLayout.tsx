@@ -13,25 +13,27 @@ interface AppLayoutProps {
 export function AppLayout({ children, activePage, headerTitle, headerSubtitle }: AppLayoutProps) {
   return (
     <div style={{
-      width: "100%",
-      height: "100vh",
+      width: "100%", height: "100vh",
       background: "var(--omnix-bg)",
       backgroundImage: "var(--omnix-grad-bg)",
       display: "flex",
       fontFamily: "var(--omnix-font)",
       color: "var(--omnix-text)",
-      overflow: "hidden",
-      position: "relative",
+      overflow: "hidden", position: "relative",
     }}>
-      {/* Deep background grid */}
+      {/* Deep background — dot grid */}
       <div style={{
-        position: "absolute",
-        inset: 0,
-        backgroundImage: `linear-gradient(rgba(99,102,241,0.03) 1px, transparent 1px),
-                          linear-gradient(90deg, rgba(99,102,241,0.03) 1px, transparent 1px)`,
-        backgroundSize: "40px 40px",
-        pointerEvents: "none",
-        zIndex: 0,
+        position: "absolute", inset: 0,
+        backgroundImage: `radial-gradient(circle, rgba(0,255,255,0.08) 1px, transparent 1px)`,
+        backgroundSize: "32px 32px",
+        pointerEvents: "none", zIndex: 0, opacity: 0.5,
+      }} />
+
+      {/* Corner accent light */}
+      <div style={{
+        position: "absolute", top: 0, right: 0, width: 400, height: 400,
+        background: "radial-gradient(circle at top right, rgba(0,0,255,0.07) 0%, transparent 65%)",
+        pointerEvents: "none", zIndex: 0,
       }} />
 
       <Sidebar activePage={activePage} />

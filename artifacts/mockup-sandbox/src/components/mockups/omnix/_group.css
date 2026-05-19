@@ -1,65 +1,115 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 :root {
-  --omnix-bg: #060810;
-  --omnix-bg-2: #0a0e1a;
-  --omnix-bg-3: #0e1424;
-  --omnix-surface: rgba(255,255,255,0.04);
-  --omnix-surface-hover: rgba(255,255,255,0.07);
-  --omnix-border: rgba(255,255,255,0.08);
-  --omnix-border-active: rgba(99,102,241,0.5);
+  /* Omnix Brand Colors */
+  --omnix-cyan: #00FFFF;
+  --omnix-cyan-dim: #00cccc;
+  --omnix-cyan-glow: rgba(0, 255, 255, 0.18);
+  --omnix-blue: #0000FF;
+  --omnix-blue-bright: #3366ff;
+  --omnix-blue-glow: rgba(0, 0, 255, 0.2);
 
-  --omnix-purple: #6366f1;
-  --omnix-purple-bright: #818cf8;
-  --omnix-blue: #3b82f6;
-  --omnix-cyan: #06b6d4;
-  --omnix-pink: #ec4899;
-  --omnix-green: #22c55e;
+  /* Backgrounds */
+  --omnix-bg: #050c17;
+  --omnix-bg-2: #0A192F;
+  --omnix-bg-3: #0d2040;
+  --omnix-bg-4: #0f2550;
 
-  --omnix-grad-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #a855f7 100%);
-  --omnix-grad-glow: linear-gradient(135deg, rgba(99,102,241,0.15) 0%, rgba(139,92,246,0.08) 100%);
-  --omnix-grad-bg: radial-gradient(ellipse 80% 60% at 50% -20%, rgba(99,102,241,0.12) 0%, transparent 70%);
+  /* Surfaces */
+  --omnix-surface: rgba(0, 255, 255, 0.04);
+  --omnix-surface-2: rgba(0, 255, 255, 0.07);
+  --omnix-surface-hover: rgba(0, 255, 255, 0.09);
+  --omnix-surface-active: rgba(0, 255, 255, 0.12);
 
-  --omnix-text: rgba(255,255,255,0.92);
-  --omnix-text-2: rgba(255,255,255,0.6);
-  --omnix-text-3: rgba(255,255,255,0.35);
+  /* Borders */
+  --omnix-border: rgba(0, 255, 255, 0.1);
+  --omnix-border-2: rgba(0, 255, 255, 0.18);
+  --omnix-border-active: rgba(0, 255, 255, 0.45);
 
-  --omnix-glow-sm: 0 0 12px rgba(99,102,241,0.3);
-  --omnix-glow-md: 0 0 24px rgba(99,102,241,0.25), 0 0 48px rgba(99,102,241,0.1);
-  --omnix-glow-lg: 0 0 40px rgba(99,102,241,0.3), 0 0 80px rgba(99,102,241,0.12);
+  /* Accent colors for roles / states */
+  --omnix-red: #ff3b5c;
+  --omnix-amber: #ffb800;
+  --omnix-green: #00e87a;
+  --omnix-purple: #9b5cff;
+  --omnix-pink: #ff4df4;
 
+  /* Gradients */
+  --omnix-grad-primary: linear-gradient(135deg, #00FFFF 0%, #0088ff 50%, #0000FF 100%);
+  --omnix-grad-cyan: linear-gradient(135deg, #00FFFF 0%, #00cccc 100%);
+  --omnix-grad-glow: linear-gradient(135deg, rgba(0,255,255,0.15) 0%, rgba(0,0,255,0.08) 100%);
+  --omnix-grad-bg: radial-gradient(ellipse 100% 60% at 50% -10%, rgba(0,255,255,0.07) 0%, transparent 70%),
+                   radial-gradient(ellipse 60% 40% at 80% 20%, rgba(0,0,255,0.06) 0%, transparent 60%);
+
+  /* Typography */
+  --omnix-text: rgba(255, 255, 255, 0.95);
+  --omnix-text-2: rgba(255, 255, 255, 0.55);
+  --omnix-text-3: rgba(255, 255, 255, 0.3);
+  --omnix-text-cyan: #00FFFF;
+
+  /* Shadows / Glows */
+  --omnix-glow-xs: 0 0 8px rgba(0,255,255,0.25);
+  --omnix-glow-sm: 0 0 16px rgba(0,255,255,0.3), 0 0 32px rgba(0,255,255,0.08);
+  --omnix-glow-md: 0 0 24px rgba(0,255,255,0.35), 0 0 60px rgba(0,255,255,0.12);
+  --omnix-glow-lg: 0 0 40px rgba(0,255,255,0.4), 0 0 100px rgba(0,255,255,0.15);
+  --omnix-glow-blue: 0 0 20px rgba(0,100,255,0.4), 0 0 50px rgba(0,0,255,0.15);
+
+  /* Layout */
   --omnix-sidebar-w: 240px;
   --omnix-header-h: 56px;
 
+  /* Radii */
   --omnix-radius: 12px;
   --omnix-radius-sm: 8px;
   --omnix-radius-lg: 16px;
+  --omnix-radius-xl: 20px;
 
+  /* Fonts */
   --omnix-font: 'Inter', -apple-system, sans-serif;
   --omnix-font-display: 'Space Grotesk', -apple-system, sans-serif;
 }
 
+/* ── Animations ── */
 @keyframes omnix-pulse {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  50% { opacity: 0.4; }
 }
 
 @keyframes omnix-float {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-4px); }
+  50% { transform: translateY(-5px); }
 }
 
 @keyframes omnix-glow-pulse {
-  0%, 100% { box-shadow: 0 0 12px rgba(99,102,241,0.3); }
-  50% { box-shadow: 0 0 24px rgba(99,102,241,0.6), 0 0 48px rgba(99,102,241,0.2); }
+  0%, 100% { box-shadow: 0 0 12px rgba(0,255,255,0.3); }
+  50% { box-shadow: 0 0 28px rgba(0,255,255,0.65), 0 0 60px rgba(0,255,255,0.2); }
 }
 
 @keyframes omnix-shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
 }
 
 @keyframes omnix-slide-in {
   from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes omnix-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes omnix-scan {
+  0%   { transform: translateY(-100%); opacity: 0.6; }
+  100% { transform: translateY(400%);  opacity: 0; }
+}
+
+@keyframes omnix-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes omnix-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
