@@ -4,9 +4,9 @@ const navItems = [
   { icon: "⊞", label: "Dashboard", active: false, badge: null },
   { icon: "◈", label: "AI Chat", active: true, badge: "3" },
   { icon: "⬡", label: "Workspaces", active: false, badge: null },
-  { icon: "👥", label: "Team", active: false, badge: null },
+  { icon: "◫", label: "Team", active: false, badge: null },
   { icon: "⊙", label: "Sources", active: false, badge: null },
-  { icon: "📊", label: "Analytics", active: false, badge: null },
+  { icon: "▤", label: "Analytics", active: false, badge: null },
 ];
 
 const workspaces = [
