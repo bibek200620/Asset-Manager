@@ -1,0 +1,316 @@
+Act as a world-class senior UI/UX architect, senior frontend engineer, motion designer, and premium SaaS product designer.
+
+You are redesigning the REMAINING authenticated UI of Omnix, an AI-powered collaborative workspace platform.
+
+IMPORTANT:
+The landing page, login page, and register/signup pages are ALREADY COMPLETE.
+
+DO NOT redesign:
+
+* landing page
+* login page
+* signup/register page
+
+Those pages already exist and are the visual source of truth for the entire application.
+
+I have uploaded:
+
+1. The completed landing/login/register design files
+2. A PDF containing screenshots of Omnix’s CURRENT authenticated UI
+
+Your task is to redesign ALL REMAINING PAGES after login so they visually match the premium style, animations, colors, spacing, and futuristic design language of the completed auth pages.
+
+━━━━━━━━━━━━━━━━━━
+PRIMARY GOAL
+━━━━━━━━━━━━━━━━━━
+
+Transform the ENTIRE authenticated Omnix experience into a cohesive premium AI SaaS platform.
+
+The current post-login UI feels:
+
+* cluttered
+* inconsistent
+* outdated
+* structurally messy
+* visually disconnected from the new auth pages
+
+Your mission:
+make the entire application feel like ONE polished futuristic AI operating system.
+
+━━━━━━━━━━━━━━━━━━
+VERY IMPORTANT RULES
+━━━━━━━━━━━━━━━━━━
+
+DO NOT:
+
+* redesign landing page
+* redesign login page
+* redesign signup page
+* change the auth page visual language
+* replace the design system
+* create a different aesthetic
+
+Instead:
+use the uploaded auth pages as the MASTER DESIGN SYSTEM.
+
+ALL remaining pages must visually match them.
+
+━━━━━━━━━━━━━━━━━━
+YOUR TASK
+━━━━━━━━━━━━━━━━━━
+
+Redesign all authenticated pages including:
+
+1. Main dashboard
+2. Workspace UI
+3. Sidebar
+4. Header/navbar
+5. Chat interface
+6. AI response UI
+7. Source cards
+8. Workspace switcher
+9. Team member UI
+10. Settings pages
+11. Profile pages
+12. Workspace management
+13. Invite/member system
+14. Empty states
+15. Loading states
+16. Modals/dialogs
+17. Notification UI
+18. AI mode selectors
+19. Shared workspace chat UI
+20. Mobile/tablet authenticated layouts
+
+━━━━━━━━━━━━━━━━━━
+DESIGN REQUIREMENTS
+━━━━━━━━━━━━━━━━━━
+
+The entire UI must feel:
+
+* futuristic
+* premium
+* cinematic
+* colorful
+* elegant
+* intelligent
+* AI-native
+* smooth
+* startup-grade
+* investor/demo ready
+
+Use the uploaded auth pages as the exact visual reference for:
+
+* gradients
+* shadows
+* typography
+* spacing
+* glassmorphism
+* blur
+* border styles
+* hover effects
+* animations
+* glow effects
+* panel styles
+* background treatment
+* motion timing
+* color palette
+* button styles
+* card designs
+
+━━━━━━━━━━━━━━━━━━
+SIDEBAR REQUIREMENTS
+━━━━━━━━━━━━━━━━━━
+
+Current sidebar lacks clarity.
+
+Redesign it completely:
+
+* modern structure
+* clean spacing
+* premium hover states
+* active indicators
+* collapsible behavior
+* workspace switcher redesign
+* profile section at bottom
+* elegant grouping
+* glowing active state
+* floating/glass style if appropriate
+
+Workspace switcher must:
+
+* look premium
+* clearly show current workspace
+* feel interactive
+* visually match auth pages
+
+━━━━━━━━━━━━━━━━━━
+HEADER REQUIREMENTS
+━━━━━━━━━━━━━━━━━━
+
+Redesign the header/navbar:
+
+* clean structure
+* profile avatar instead of sign-out button
+* modern dropdown menu
+* workspace visibility
+* smooth spacing
+* premium blur/glass effect
+* AI mode selector polish
+* responsive behavior
+
+━━━━━━━━━━━━━━━━━━
+CHAT EXPERIENCE REQUIREMENTS
+━━━━━━━━━━━━━━━━━━
+
+Make the AI chat feel world-class.
+
+Requirements:
+
+* elegant assistant response cards
+* streaming animation polish
+* premium typography
+* improved spacing
+* beautiful markdown rendering
+* redesigned source cards
+* citation UI
+* modern input area
+* futuristic AI feel
+
+In collaborative chats:
+
+* show avatars beside messages
+* show sender names
+* show role badges
+* visually distinguish:
+
+  * Founder → red accent
+  * Co-owner → gold accent
+  * Member → blue accent
+
+━━━━━━━━━━━━━━━━━━
+SETTINGS REQUIREMENTS
+━━━━━━━━━━━━━━━━━━
+
+Current settings are overloaded.
+
+Split into:
+
+* Profile
+* Account
+* Workspace
+* AI Settings
+* Appearance
+* Notifications
+* Team Management
+
+Add:
+
+* profile image upload
+* proper edit/save flows
+* structured navigation
+* modern settings cards
+* premium form styling
+
+━━━━━━━━━━━━━━━━━━
+WORKSPACE REQUIREMENTS
+━━━━━━━━━━━━━━━━━━
+
+Workspace UI currently feels messy.
+
+Redesign:
+
+* workspace cards
+* member list
+* invite system UI
+* role indicators
+* create workspace modal
+* member management panel
+* empty states
+* collaborative visuals
+
+━━━━━━━━━━━━━━━━━━
+ANIMATION REQUIREMENTS
+━━━━━━━━━━━━━━━━━━
+
+Preserve the same animation personality as the auth pages:
+
+* smooth transitions
+* hover motion
+* floating effects
+* blur transitions
+* premium page transitions
+* loading skeletons
+* modern motion design
+
+Do not overdo motion.
+Match the uploaded auth design style.
+
+━━━━━━━━━━━━━━━━━━
+RESPONSIVE REQUIREMENTS
+━━━━━━━━━━━━━━━━━━
+
+Authenticated pages must:
+
+* work beautifully on desktop
+* adapt properly to tablet
+* remain clean on mobile
+* preserve hierarchy
+* avoid overflow/clipping
+* maintain premium feel on all screen sizes
+
+━━━━━━━━━━━━━━━━━━
+ENGINEERING RULES
+━━━━━━━━━━━━━━━━━━
+
+DO:
+
+* inspect uploaded PDF screenshots carefully
+* understand the current Omnix structure
+* redesign systematically
+* preserve functionality
+* preserve routes
+* preserve business logic
+* preserve AI features
+* preserve workspace systems
+* preserve web search
+* preserve chat behavior
+
+DO NOT:
+
+* rewrite backend logic
+* break streaming
+* break Supabase integration
+* break Tavily integration
+* remove functionality
+* create fake/mock-only interfaces
+
+━━━━━━━━━━━━━━━━━━
+IMPLEMENTATION PROCESS
+━━━━━━━━━━━━━━━━━━
+
+1. Analyze the uploaded auth pages
+2. Extract the design system
+3. Analyze the uploaded Omnix screenshots
+4. Identify all authenticated UI sections
+5. Redesign them systematically
+6. Match the exact visual language of the auth pages
+7. Preserve app functionality
+8. Ensure responsive behavior
+9. Ensure consistent motion/animation quality
+
+━━━━━━━━━━━━━━━━━━
+FINAL GOAL
+━━━━━━━━━━━━━━━━━━
+
+After redesign:
+Omnix should feel like:
+
+* a premium AI collaboration operating system
+* not a student project
+* not a generic dashboard
+* not a template chatbot
+
+The ENTIRE application should feel cohesive with the uploaded landing/login/register design system.
+
+The user should feel like they never left the same premium product ecosystem after logging in.
