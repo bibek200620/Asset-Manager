@@ -62,7 +62,7 @@ export function Settings() {
                 }}
               >
                 {activeSection === section.id && (
-                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-2/3 rounded-full bg-[var(--omnix-purple)] shadow-[var(--omnix-glow-sm)]" />
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-2/3 rounded-full bg-[var(--omnix-cyan)] shadow-[var(--omnix-glow-sm)]" />
                 )}
                 <span className="text-[15px] opacity-80">{section.icon}</span>
                 {section.label}
@@ -103,7 +103,7 @@ export function Settings() {
                       <div className="relative z-10 flex justify-between items-start mb-2">
                         <div className="font-[var(--omnix-font-display)] font-semibold text-base">{model.name}</div>
                         {model.badge && (
-                          <span className="text-[9px] px-2 py-0.5 rounded-full bg-[rgba(99,102,241,0.15)] text-[var(--omnix-purple-bright)] border border-[rgba(99,102,241,0.3)]">
+                          <span className="text-[9px] px-2 py-0.5 rounded-full bg-[rgba(0,255,255,0.08)] text-[var(--omnix-cyan)] border border-[rgba(0,255,255,0.2)]">
                             {model.badge}
                           </span>
                         )}
@@ -125,7 +125,7 @@ export function Settings() {
                       className="p-4 rounded-[var(--omnix-radius)] text-left transition-all border group"
                       style={{
                         background: aiMode === mode.id ? 'var(--omnix-surface-hover)' : 'transparent',
-                        borderColor: aiMode === mode.id ? 'var(--omnix-purple)' : 'var(--omnix-border)',
+                        borderColor: aiMode === mode.id ? 'var(--omnix-cyan)' : 'var(--omnix-border)',
                         boxShadow: aiMode === mode.id ? 'var(--omnix-glow-sm)' : 'none',
                       }}
                     >
@@ -153,7 +153,7 @@ export function Settings() {
                   <Switch 
                     checked={webSearch} 
                     onCheckedChange={setWebSearch} 
-                    className="data-[state=checked]:bg-[var(--omnix-purple)] shadow-[var(--omnix-glow-sm)]" 
+                    className="data-[state=checked]:bg-[var(--omnix-cyan)] shadow-[var(--omnix-glow-sm)]" 
                   />
                 </div>
 
@@ -170,7 +170,7 @@ export function Settings() {
                     <Switch 
                       checked={memoryEnabled} 
                       onCheckedChange={setMemoryEnabled} 
-                      className="data-[state=checked]:bg-[var(--omnix-purple)] shadow-[var(--omnix-glow-sm)]" 
+                      className="data-[state=checked]:bg-[var(--omnix-cyan)] shadow-[var(--omnix-glow-sm)]" 
                     />
                   </div>
                 </div>
@@ -182,7 +182,7 @@ export function Settings() {
                       <div className="font-medium text-sm mb-1 text-[var(--omnix-text)]">Creativity / Temperature</div>
                       <div className="text-[var(--omnix-text-3)] text-xs">Higher values make output more random, lower makes it more focused.</div>
                     </div>
-                    <div className="text-xs font-mono bg-[rgba(0,0,0,0.3)] px-2 py-1 rounded text-[var(--omnix-purple-bright)] border border-[var(--omnix-border)]">
+                    <div className="text-xs font-mono bg-[rgba(0,0,0,0.3)] px-2 py-1 rounded text-[var(--omnix-cyan)] border border-[var(--omnix-border)]">
                       {temperature[0].toFixed(2)}
                     </div>
                   </div>
@@ -210,7 +210,7 @@ export function Settings() {
                   <Input 
                     type="number" 
                     defaultValue="4096"
-                    className="w-24 h-8 bg-[rgba(0,0,0,0.3)] border-[var(--omnix-border)] text-sm font-mono text-center focus-visible:ring-[var(--omnix-purple)] focus-visible:border-[var(--omnix-purple)] rounded-[var(--omnix-radius-sm)]" 
+                    className="w-24 h-8 bg-[rgba(0,0,0,0.3)] border-[var(--omnix-border)] text-sm font-mono text-center focus-visible:ring-[var(--omnix-cyan)] focus-visible:border-[var(--omnix-cyan)] rounded-[var(--omnix-radius-sm)]" 
                   />
                 </div>
               </div>
@@ -220,7 +220,7 @@ export function Settings() {
                 <Label className="text-xs uppercase tracking-widest text-[var(--omnix-text-3)] font-semibold">Custom Instructions</Label>
                 <Textarea 
                   placeholder="E.g., Always reply in markdown. Never use emojis. Assume I am a senior engineer..."
-                  className="min-h-[120px] bg-[var(--omnix-surface)] border-[var(--omnix-border)] focus-visible:ring-1 focus-visible:ring-[var(--omnix-purple)] focus-visible:border-[var(--omnix-purple)] rounded-[var(--omnix-radius)] resize-none text-sm placeholder:text-[var(--omnix-text-3)] shadow-inner"
+                  className="min-h-[120px] bg-[var(--omnix-surface)] border-[var(--omnix-border)] focus-visible:ring-1 focus-visible:ring-[var(--omnix-cyan)] focus-visible:border-[var(--omnix-cyan)] rounded-[var(--omnix-radius)] resize-none text-sm placeholder:text-[var(--omnix-text-3)] shadow-inner"
                 />
               </div>
 
@@ -244,11 +244,11 @@ export function Settings() {
 
               <div className="flex flex-col md:flex-row gap-8 items-start">
                 <div className="flex-shrink-0 relative group cursor-pointer">
-                  <div className="w-24 h-24 rounded-full border-2 border-dashed border-[var(--omnix-border)] group-hover:border-[var(--omnix-purple-bright)] flex items-center justify-center bg-[rgba(0,0,0,0.2)] relative z-10 transition-colors">
+                  <div className="w-24 h-24 rounded-full border-2 border-dashed border-[var(--omnix-border)] group-hover:border-[var(--omnix-cyan)] flex items-center justify-center bg-[rgba(0,0,0,0.2)] relative z-10 transition-colors">
                     <span className="text-2xl font-bold bg-clip-text text-transparent bg-[var(--omnix-grad-primary)]">A</span>
                   </div>
-                  <div className="absolute inset-0 bg-[var(--omnix-purple)] rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity z-0" />
-                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[var(--omnix-surface)] border border-[var(--omnix-border)] text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider text-[var(--omnix-text-2)] group-hover:text-white group-hover:border-[var(--omnix-purple)] transition-colors shadow-lg z-20 whitespace-nowrap">
+                  <div className="absolute inset-0 bg-[var(--omnix-cyan)] rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity z-0" />
+                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-[var(--omnix-surface)] border border-[var(--omnix-border)] text-[9px] px-2 py-0.5 rounded-full uppercase tracking-wider text-[var(--omnix-text-2)] group-hover:text-white group-hover:border-[var(--omnix-cyan)] transition-colors shadow-lg z-20 whitespace-nowrap">
                     Upload
                   </div>
                 </div>
@@ -257,7 +257,7 @@ export function Settings() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <Label className="text-xs text-[var(--omnix-text-3)]">Display Name</Label>
-                      <Input defaultValue="Alex Chen" className="bg-[var(--omnix-surface)] border-[var(--omnix-border)] rounded-[var(--omnix-radius-sm)] h-9 focus-visible:ring-1 focus-visible:ring-[var(--omnix-purple)] focus-visible:border-[var(--omnix-purple)] text-sm" />
+                      <Input defaultValue="Alex Chen" className="bg-[var(--omnix-surface)] border-[var(--omnix-border)] rounded-[var(--omnix-radius-sm)] h-9 focus-visible:ring-1 focus-visible:ring-[var(--omnix-cyan)] focus-visible:border-[var(--omnix-cyan)] text-sm" />
                     </div>
                     <div className="space-y-1.5">
                       <Label className="text-xs text-[var(--omnix-text-3)]">Email</Label>
@@ -265,7 +265,7 @@ export function Settings() {
                     </div>
                     <div className="space-y-1.5 sm:col-span-2">
                       <Label className="text-xs text-[var(--omnix-text-3)]">Role / Title</Label>
-                      <Input defaultValue="Senior AI Researcher" className="bg-[var(--omnix-surface)] border-[var(--omnix-border)] rounded-[var(--omnix-radius-sm)] h-9 focus-visible:ring-1 focus-visible:ring-[var(--omnix-purple)] focus-visible:border-[var(--omnix-purple)] text-sm" />
+                      <Input defaultValue="Senior AI Researcher" className="bg-[var(--omnix-surface)] border-[var(--omnix-border)] rounded-[var(--omnix-radius-sm)] h-9 focus-visible:ring-1 focus-visible:ring-[var(--omnix-cyan)] focus-visible:border-[var(--omnix-cyan)] text-sm" />
                     </div>
                   </div>
                   

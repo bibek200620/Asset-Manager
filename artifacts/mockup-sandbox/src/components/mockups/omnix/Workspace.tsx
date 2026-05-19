@@ -24,7 +24,7 @@ export function Workspace() {
   const activities = [
     { id: 1, user: "Marcus Webb", action: "created a new chat", target: "Project Alpha Synthesis", time: "10m ago", icon: <Zap size={14} className="text-amber-500" /> },
     { id: 2, user: "Sarah Chen", action: "joined the workspace", target: "", time: "2h ago", icon: <UserPlus size={14} className="text-blue-500" /> },
-    { id: 3, user: "Omnix AI", action: "completed deep analysis", target: "Q3 Market Research", time: "4h ago", icon: <Shield size={14} className="text-indigo-500" /> },
+    { id: 3, user: "Omnix AI", action: "completed deep analysis", target: "Q3 Market Research", time: "4h ago", icon: <Shield size={14} className="text-[#00FFFF]" /> },
     { id: 4, user: "Elena Rostova", action: "updated workspace settings", target: "", time: "1d ago", icon: <Settings size={14} className="text-pink-500" /> },
   ];
 
@@ -51,7 +51,7 @@ export function Workspace() {
                   >
                     {tab}
                     {activeTab === tab && (
-                      <div className="absolute bottom-0 left-0 right-0 h-[2px] rounded-t-full bg-[var(--omnix-purple-bright)] shadow-[0_0_8px_rgba(129,140,248,0.6)]" />
+                      <div className="absolute bottom-0 left-0 right-0 h-[2px] rounded-t-full bg-[var(--omnix-cyan)] shadow-[0_0_8px_rgba(0,255,255,0.6)]" />
                     )}
                   </button>
                 ))}
@@ -70,7 +70,7 @@ export function Workspace() {
                 {/* Workspace Overview Card */}
                 <div className="p-6 rounded-2xl border border-[var(--omnix-border)] relative overflow-hidden backdrop-blur-md bg-[rgba(10,14,26,0.5)]">
                   {/* Decorative ambient light */}
-                  <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--omnix-purple)] opacity-10 rounded-full blur-[80px] pointer-events-none" />
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--omnix-cyan)] opacity-10 rounded-full blur-[80px] pointer-events-none" />
                   
                   <div className="flex items-start justify-between relative z-10">
                     <div className="flex items-center gap-5">
@@ -90,9 +90,9 @@ export function Workspace() {
                     </div>
 
                     <div className="flex flex-col items-end gap-3">
-                      <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10">
-                        <span className="w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_8px_rgba(99,102,241,0.8)]" />
-                        <span className="text-xs font-semibold text-indigo-300 tracking-wide uppercase">Pro Plan</span>
+                      <div className="flex items-center gap-2 px-3 py-1 rounded-full border border-[rgba(0,255,255,0.2)] bg-[rgba(0,255,255,0.08)]">
+                        <span className="w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_8px_rgba(0,255,255,0.7)]" />
+                        <span className="text-xs font-semibold text-[#00cccc] tracking-wide uppercase">Pro Plan</span>
                       </div>
                       <button className="text-xs font-medium text-[var(--omnix-text-2)] hover:text-white transition-colors flex items-center gap-1">
                         Upgrade plan <ArrowRight size={12} />
@@ -110,7 +110,7 @@ export function Workspace() {
                       <input 
                         type="text" 
                         placeholder="Search members..." 
-                        className="pl-9 pr-4 py-1.5 text-sm bg-[var(--omnix-surface)] border border-[var(--omnix-border)] rounded-full focus:outline-none focus:border-[var(--omnix-purple)] transition-colors text-[var(--omnix-text)] w-64"
+                        className="pl-9 pr-4 py-1.5 text-sm bg-[var(--omnix-surface)] border border-[var(--omnix-border)] rounded-full focus:outline-none focus:border-[var(--omnix-cyan)] transition-colors text-[var(--omnix-text)] w-64"
                       />
                     </div>
                   </div>
@@ -170,10 +170,10 @@ export function Workspace() {
                       <input 
                         type="email" 
                         placeholder="Email address" 
-                        className="w-full pl-9 pr-4 py-2.5 text-sm bg-[var(--omnix-surface)] border border-[var(--omnix-border)] rounded-lg focus:outline-none focus:border-[var(--omnix-purple)] transition-colors text-[var(--omnix-text)]"
+                        className="w-full pl-9 pr-4 py-2.5 text-sm bg-[var(--omnix-surface)] border border-[var(--omnix-border)] rounded-lg focus:outline-none focus:border-[var(--omnix-cyan)] transition-colors text-[var(--omnix-text)]"
                       />
                     </div>
-                    <select className="px-4 py-2.5 text-sm bg-[var(--omnix-surface)] border border-[var(--omnix-border)] rounded-lg focus:outline-none focus:border-[var(--omnix-purple)] text-[var(--omnix-text)] appearance-none min-w-[120px]">
+                    <select className="px-4 py-2.5 text-sm bg-[var(--omnix-surface)] border border-[var(--omnix-border)] rounded-lg focus:outline-none focus:border-[var(--omnix-cyan)] text-[var(--omnix-text)] appearance-none min-w-[120px]">
                       <option value="member">Member</option>
                       <option value="viewer">Viewer</option>
                       <option value="co-owner">Co-owner</option>
@@ -201,7 +201,7 @@ export function Workspace() {
                             <div className="flex items-center gap-3">
                               <span className="text-xs font-medium text-[var(--omnix-text-2)]">{invite.role}</span>
                               <div className="h-4 w-px bg-[var(--omnix-border)]" />
-                              <button className="text-xs font-medium text-[var(--omnix-purple-bright)] hover:text-white transition-colors">Resend</button>
+                              <button className="text-xs font-medium text-[var(--omnix-cyan)] hover:text-white transition-colors">Resend</button>
                               <button className="text-[var(--omnix-text-3)] hover:text-red-400 transition-colors ml-1"><X size={16} /></button>
                             </div>
                           </div>
@@ -247,7 +247,7 @@ export function Workspace() {
                   </div>
                   
                   {activity.target && (
-                    <div className="text-sm font-medium text-[var(--omnix-purple-bright)] mb-1">
+                    <div className="text-sm font-medium text-[var(--omnix-cyan)] mb-1">
                       {activity.target}
                     </div>
                   )}
