@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+:root {
+  --omnix-cyan: #00FFFF;
+  --omnix-cyan-dim: #00cccc;
+  --omnix-cyan-glow: rgba(0, 255, 255, 0.18);
+  --omnix-blue: #3366ff;
+  --omnix-blue-bright: #3366ff;
+  --omnix-blue-glow: rgba(0, 0, 255, 0.2);
+
+  --omnix-bg: #050c17;
+  --omnix-bg-2: #0A192F;
+  --omnix-bg-3: #0d2040;
+  --omnix-bg-4: #0f2550;
+
+  --omnix-surface: rgba(0, 255, 255, 0.04);
+  --omnix-surface-2: rgba(0, 255, 255, 0.07);
+  --omnix-surface-hover: rgba(0, 255, 255, 0.09);
+  --omnix-surface-active: rgba(0, 255, 255, 0.12);
+
+  --omnix-border: rgba(0, 255, 255, 0.1);
+  --omnix-border-2: rgba(0, 255, 255, 0.18);
+  --omnix-border-active: rgba(0, 255, 255, 0.45);
+
+  --omnix-red: #ff3b5c;
+  --omnix-amber: #ffb800;
+  --omnix-green: #00e87a;
+  --omnix-purple: #9b5cff;
+  --omnix-pink: #ff4df4;
+
+  --omnix-grad-primary: linear-gradient(135deg, #00FFFF 0%, #0088ff 50%, #0000FF 100%);
+  --omnix-grad-cyan: linear-gradient(135deg, #00FFFF 0%, #00cccc 100%);
+  --omnix-grad-glow: linear-gradient(135deg, rgba(0,255,255,0.15) 0%, rgba(0,0,255,0.08) 100%);
+  --omnix-grad-bg: radial-gradient(ellipse 100% 60% at 50% -10%, rgba(0,255,255,0.07) 0%, transparent 70%),
+                   radial-gradient(ellipse 60% 40% at 80% 20%, rgba(0,0,255,0.06) 0%, transparent 60%);
+
+  --omnix-text: rgba(255, 255, 255, 0.95);
+  --omnix-text-2: rgba(255, 255, 255, 0.55);
+  --omnix-text-3: rgba(255, 255, 255, 0.3);
+  --omnix-text-cyan: #00FFFF;
+
+  --omnix-glow-xs: 0 0 8px rgba(0,255,255,0.25);
+  --omnix-glow-sm: 0 0 16px rgba(0,255,255,0.3), 0 0 32px rgba(0,255,255,0.08);
+  --omnix-glow-md: 0 0 24px rgba(0,255,255,0.35), 0 0 60px rgba(0,255,255,0.12);
+  --omnix-glow-lg: 0 0 40px rgba(0,255,255,0.4), 0 0 100px rgba(0,255,255,0.15);
+  --omnix-glow-blue: 0 0 20px rgba(0,100,255,0.4), 0 0 50px rgba(0,0,255,0.15);
+
+  --omnix-sidebar-w: 240px;
+  --omnix-header-h: 56px;
+
+  --omnix-radius: 12px;
+  --omnix-radius-sm: 8px;
+  --omnix-radius-lg: 16px;
+  --omnix-radius-xl: 20px;
+
+  --omnix-font: 'Inter', -apple-system, sans-serif;
+  --omnix-font-display: 'Space Grotesk', -apple-system, sans-serif;
+}
+
+@keyframes omnix-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+@keyframes omnix-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes omnix-glow-pulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(0,255,255,0.3); }
+  50% { box-shadow: 0 0 28px rgba(0,255,255,0.65), 0 0 60px rgba(0,255,255,0.2); }
+}
+
+@keyframes omnix-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+@keyframes omnix-slide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes omnix-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes omnix-scan {
+  0%   { transform: translateY(-100%); opacity: 0.6; }
+  100% { transform: translateY(400%);  opacity: 0; }
+}
+
+@keyframes omnix-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes omnix-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--omnix-bg);
+  color: var(--omnix-text);
+  font-family: var(--omnix-font);
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0,255,255,0.15);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0,255,255,0.3);
+}
+
+input, button, select, textarea {
+  font-family: var(--omnix-font);
+}
+
+button {
+  cursor: pointer;
+}
