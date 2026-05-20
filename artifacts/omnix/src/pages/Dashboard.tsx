@@ -1,130 +1,181 @@
 import React, { useState } from "react";
 import { AppLayout } from "../components/layout/AppLayout";
 import { useLocation } from "wouter";
-import { Zap, TrendingUp, Users, Database, ArrowRight, Bot, FileText, BarChart2, Globe, ChevronRight, Search, Code } from "lucide-react";
-import { AreaChart, Area, ResponsiveContainer, Tooltip } from "recharts";
-
-const sparkData = [
-  { v: 30 }, { v: 45 }, { v: 38 }, { v: 62 }, { v: 55 }, { v: 78 }, { v: 70 }, { v: 88 }, { v: 82 }, { v: 96 },
-];
-
-const activityData = [
-  { time: "00", queries: 12 }, { time: "02", queries: 5 }, { time: "04", queries: 3 },
-  { time: "06", queries: 8 }, { time: "08", queries: 24 }, { time: "10", queries: 42 },
-  { time: "12", queries: 38 }, { time: "14", queries: 55 }, { time: "16", queries: 49 },
-  { time: "18", queries: 63 }, { time: "20", queries: 44 }, { time: "22", queries: 29 },
-];
-
-const recentActivity = [
-  { Icon: Bot, label: "AI completed research on market trends", time: "2 min ago", color: "#00FFFF" },
-  { Icon: FileText, label: "Sarah uploaded 3 new documents", time: "8 min ago", color: "#9b5cff" },
-  { Icon: Users, label: "Marcus joined the workspace", time: "24 min ago", color: "#00e87a" },
-  { Icon: BarChart2, label: "Monthly analytics report generated", time: "1h ago", color: "#ffb800" },
-  { Icon: Globe, label: "Knowledge base synced with Notion", time: "2h ago", color: "#3366ff" },
-];
-
-const agents = [
-  { name: "Research Agent", desc: "Web and document research", status: "Active", Icon: Search, queries: 248, color: "#00FFFF" },
-  { name: "Code Assistant", desc: "Code generation and review", status: "Idle", Icon: Code, queries: 892, color: "#9b5cff" },
-  { name: "Data Analyst", desc: "Charts and data insights", status: "Running", Icon: BarChart2, queries: 156, color: "#00e87a" },
-];
+import {
+  MessageSquare, Users, Database, Crown, Zap, TrendingUp,
+  FileText, Search, ArrowRight, Bot, Globe, BarChart2,
+  Shield, Share2, Upload, RefreshCw, Clock, ChevronRight,
+} from "lucide-react";
 
 const statCards = [
-  { label: "Total Queries", value: "12,847", change: "+18.4%", Icon: Zap, color: "#00FFFF", data: sparkData },
-  { label: "Active Users", value: "2,394", change: "+7.2%", Icon: Users, color: "#9b5cff", data: sparkData.map(d => ({ v: d.v * 0.7 })) },
-  { label: "Knowledge Sources", value: "1,283", change: "+23.1%", Icon: Database, color: "#00e87a", data: sparkData.map(d => ({ v: d.v * 0.5 })) },
-  { label: "Tokens Used", value: "4.2M", change: "+12.5%", Icon: TrendingUp, color: "#ffb800", data: sparkData.map(d => ({ v: d.v * 0.85 })) },
+  { value: "12.8K", label: "AI Conversations", badge: "Synced", badgeColor: "#00e87a", Icon: MessageSquare, color: "#00FFFF" },
+  { value: "24", label: "Team Members", badge: "Shared", badgeColor: "#9b5cff", Icon: Users, color: "#9b5cff" },
+  { value: "Live", label: "Knowledge Sources", badge: "Upload ready", badgeColor: "#ffb800", Icon: Database, color: "#00e87a" },
+  { value: "Pro", label: "Workspace Plan", badge: "Active", badgeColor: "#00FFFF", Icon: Crown, color: "#ffb800" },
+];
+
+const quickActions = [
+  { Icon: FileText, label: "Analyze Document", desc: "Upload and query source material", color: "#00FFFF" },
+  { Icon: MessageSquare, label: "Start AI Chat", desc: "Open a collaborative thread", color: "#9b5cff" },
+  { Icon: Search, label: "Deep Research", desc: "Use web and workspace context", color: "#00e87a" },
+  { Icon: Users, label: "Team Management", desc: "Invite and manage roles", color: "#ffb800" },
+  { Icon: BarChart2, label: "View Analytics", desc: "Explore usage and performance", color: "#ff4df4" },
+  { Icon: Globe, label: "Sync Sources", desc: "Connect and refresh data", color: "#3366ff" },
+];
+
+const recentSessions = [
+  {
+    title: "Market research for Q3 product launch",
+    preview: "Analyzed 14 documents and web sources — found 3 key competitor gaps worth addressing in the roadmap.",
+    time: "2 min ago", icon: Search, color: "#00FFFF",
+  },
+  {
+    title: "Design system documentation review",
+    preview: "Summarized component library updates and flagged 7 inconsistencies across the design tokens.",
+    time: "38 min ago", icon: FileText, color: "#9b5cff",
+  },
+  {
+    title: "Sprint planning assistant",
+    preview: "Broke down 22 backlog items into sprint goals. Estimated velocity based on last 4 sprints.",
+    time: "2h ago", icon: Bot, color: "#00e87a",
+  },
+  {
+    title: "Investor pitch deck narrative",
+    preview: "Drafted executive summary, market size section, and competitive positioning slide with citations.",
+    time: "5h ago", icon: TrendingUp, color: "#ffb800",
+  },
+];
+
+const healthItems = [
+  { label: "Session security", status: "Protected", pct: 100, color: "#00e87a" },
+  { label: "Shared context", status: "Enabled", pct: 100, color: "#00FFFF" },
+  { label: "Invite queue", status: "2 active", pct: 40, color: "#ffb800" },
+  { label: "Storage used", status: "4.2 / 20 GB", pct: 21, color: "#9b5cff" },
+];
+
+const teamActivity = [
+  { name: "Alex Chen", handle: "Founder", action: "is active in", target: "Omnix Labs", time: "Now", color: "#00FFFF", badge: "FOUNDER" },
+  { name: "Sarah Kim", handle: "Co-owner", action: "joined", target: "Design Team", time: "4m ago", color: "#9b5cff", badge: "DESIGNER" },
+  { name: "Marcus Johnson", handle: "Member", action: "uploaded to", target: "Dev Space", time: "18m ago", color: "#00e87a", badge: "MEMBER" },
+  { name: "Priya Patel", handle: "Member", action: "started chat in", target: "Marketing", time: "1h ago", color: "#ffb800", badge: "MEMBER" },
 ];
 
 export function Dashboard() {
   const [, navigate] = useLocation();
-  const [hoveredStat, setHoveredStat] = useState<number | null>(null);
+  const [hoveredAction, setHoveredAction] = useState<number | null>(null);
 
   return (
     <AppLayout headerTitle="Dashboard" headerSubtitle="Welcome back, Alex">
-      <div style={{ height: "100%", overflowY: "auto", padding: "20px", display: "flex", flexDirection: "column", gap: 20, animation: "omnix-fade-in 0.3s ease" }}>
+      <div style={{ height: "100%", overflowY: "auto", padding: "20px 24px", display: "flex", flexDirection: "column", gap: 16, animation: "omnix-fade-in 0.3s ease" }}>
 
-        {/* Stat Cards */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14 }}>
+        {/* Page title row */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+              <Zap size={18} color="var(--omnix-cyan)" />
+              <span style={{ color: "var(--omnix-text)", fontWeight: 700, fontSize: 22, fontFamily: "var(--omnix-font-display)" }}>Workspace Overview</span>
+            </div>
+            <div style={{ color: "var(--omnix-text-3)", fontSize: 13 }}>Real-time insights across Omnix Labs AI interactions and data sources.</div>
+          </div>
+          <button onClick={() => navigate("/analytics")} style={{
+            padding: "8px 18px", borderRadius: 9,
+            background: "rgba(0,255,255,0.07)", border: "1px solid rgba(0,255,255,0.25)",
+            color: "var(--omnix-cyan)", fontSize: 12, fontWeight: 600, cursor: "pointer",
+            display: "flex", alignItems: "center", gap: 7, fontFamily: "var(--omnix-font)",
+            transition: "all 0.2s",
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background = "rgba(0,255,255,0.14)"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "rgba(0,255,255,0.07)"; }}
+          >
+            <TrendingUp size={13} /> View Full Report
+          </button>
+        </div>
+
+        {/* Stat cards */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
           {statCards.map((card, i) => (
-            <div key={i}
-              onMouseEnter={() => setHoveredStat(i)}
-              onMouseLeave={() => setHoveredStat(null)}
-              style={{
-                borderRadius: "var(--omnix-radius)", padding: "16px",
-                background: hoveredStat === i ? "var(--omnix-surface-2)" : "var(--omnix-surface)",
-                border: `1px solid ${hoveredStat === i ? `${card.color}33` : "var(--omnix-border)"}`,
-                transition: "all 0.2s", cursor: "default", position: "relative", overflow: "hidden",
-                boxShadow: hoveredStat === i ? `0 0 24px ${card.color}15` : "none",
-              }}>
-              <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 60, opacity: 0.6 }}>
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={card.data} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
-                    <defs>
-                      <linearGradient id={`grad${i}`} x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor={card.color} stopOpacity={0.3} />
-                        <stop offset="95%" stopColor={card.color} stopOpacity={0} />
-                      </linearGradient>
-                    </defs>
-                    <Area type="monotone" dataKey="v" stroke={card.color} strokeWidth={1.5} fill={`url(#grad${i})`} dot={false} />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </div>
-              <div style={{ position: "relative" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
-                  <div style={{ width: 34, height: 34, borderRadius: 9, background: `${card.color}15`, border: `1px solid ${card.color}30`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <card.Icon size={16} color={card.color} />
-                  </div>
-                  <span style={{ background: "rgba(0,232,122,0.12)", border: "1px solid rgba(0,232,122,0.25)", borderRadius: 20, padding: "2px 7px", fontSize: 10, fontWeight: 600, color: "var(--omnix-green)" }}>{card.change}</span>
+            <div key={i} style={{
+              borderRadius: "var(--omnix-radius)", padding: "16px 18px",
+              background: "var(--omnix-surface)", border: "1px solid var(--omnix-border)",
+              position: "relative", overflow: "hidden", transition: "all 0.2s",
+            }}
+              onMouseEnter={e => { (e.currentTarget as HTMLDivElement).style.borderColor = `${card.color}35`; (e.currentTarget as HTMLDivElement).style.boxShadow = `0 0 20px ${card.color}10`; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLDivElement).style.borderColor = "var(--omnix-border)"; (e.currentTarget as HTMLDivElement).style.boxShadow = "none"; }}
+            >
+              <div style={{
+                position: "absolute", top: 0, right: 0, bottom: 0, width: "35%",
+                background: `radial-gradient(ellipse at 100% 50%, ${card.color}0a 0%, transparent 70%)`,
+                pointerEvents: "none",
+              }} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+                <div style={{ width: 32, height: 32, borderRadius: 8, background: `${card.color}15`, border: `1px solid ${card.color}25`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <card.Icon size={15} color={card.color} />
                 </div>
-                <div style={{ color: "var(--omnix-text)", fontSize: 22, fontWeight: 700, fontFamily: "var(--omnix-font-display)", lineHeight: 1 }}>{card.value}</div>
-                <div style={{ color: "var(--omnix-text-3)", fontSize: 11, marginTop: 4 }}>{card.label}</div>
+                <span style={{
+                  background: `${card.badgeColor}15`, border: `1px solid ${card.badgeColor}30`,
+                  borderRadius: 20, padding: "2px 8px", fontSize: 10, fontWeight: 600,
+                  color: card.badgeColor,
+                }}>{card.badge}</span>
               </div>
+              <div style={{ color: "var(--omnix-text)", fontSize: 26, fontWeight: 800, fontFamily: "var(--omnix-font-display)", lineHeight: 1, marginBottom: 4 }}>{card.value}</div>
+              <div style={{ color: "var(--omnix-text-3)", fontSize: 12 }}>{card.label}</div>
             </div>
           ))}
         </div>
 
-        {/* Charts + Activity row */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 300px", gap: 14 }}>
-          <div style={{ borderRadius: "var(--omnix-radius)", padding: 18, background: "var(--omnix-surface)", border: "1px solid var(--omnix-border)" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <div>
-                <div style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 14, fontFamily: "var(--omnix-font-display)" }}>Query Activity</div>
-                <div style={{ color: "var(--omnix-text-3)", fontSize: 11, marginTop: 2 }}>Queries per hour, last 24h</div>
-              </div>
-              <button onClick={() => navigate("/analytics")} style={{ background: "none", border: "none", color: "var(--omnix-cyan)", fontSize: 11, cursor: "pointer", fontFamily: "var(--omnix-font)" }}>View Details</button>
+        {/* Middle row: Quick Actions + Right column */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 14 }}>
+
+          {/* Quick Actions */}
+          <div style={{ borderRadius: "var(--omnix-radius)", padding: "18px", background: "var(--omnix-surface)", border: "1px solid var(--omnix-border)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+              <Zap size={14} color="var(--omnix-cyan)" />
+              <span style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 15, fontFamily: "var(--omnix-font-display)" }}>Quick Actions</span>
             </div>
-            <div style={{ height: 140 }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={activityData}>
-                  <defs>
-                    <linearGradient id="actGrad" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#00FFFF" stopOpacity={0.2} />
-                      <stop offset="95%" stopColor="#00FFFF" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <Area type="monotone" dataKey="queries" stroke="#00FFFF" strokeWidth={2} fill="url(#actGrad)" dot={false} />
-                  <Tooltip
-                    contentStyle={{ background: "#0a1628", border: "1px solid rgba(0,255,255,0.2)", borderRadius: 8, fontSize: 11, color: "#fff" }}
-                    cursor={{ stroke: "rgba(0,255,255,0.3)", strokeWidth: 1, strokeDasharray: "4 4" }}
-                    formatter={(v: number) => [v, "Queries"]}
-                  />
-                </AreaChart>
-              </ResponsiveContainer>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              {quickActions.map((action, i) => (
+                <button key={i}
+                  onMouseEnter={() => setHoveredAction(i)}
+                  onMouseLeave={() => setHoveredAction(null)}
+                  style={{
+                    borderRadius: 10, padding: "12px 14px",
+                    background: hoveredAction === i ? `${action.color}08` : "rgba(255,255,255,0.02)",
+                    border: `1px solid ${hoveredAction === i ? `${action.color}30` : "var(--omnix-border)"}`,
+                    cursor: "pointer", textAlign: "left", transition: "all 0.15s", display: "flex", gap: 12, alignItems: "center",
+                  }}
+                >
+                  <div style={{ width: 32, height: 32, borderRadius: 8, background: `${action.color}15`, border: `1px solid ${action.color}25`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <action.Icon size={15} color={action.color} />
+                  </div>
+                  <div>
+                    <div style={{ color: "var(--omnix-text)", fontSize: 12, fontWeight: 600, marginBottom: 2 }}>{action.label}</div>
+                    <div style={{ color: "var(--omnix-text-3)", fontSize: 11 }}>{action.desc}</div>
+                  </div>
+                </button>
+              ))}
             </div>
           </div>
 
-          <div style={{ borderRadius: "var(--omnix-radius)", padding: 18, background: "var(--omnix-surface)", border: "1px solid var(--omnix-border)" }}>
-            <div style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 14, fontFamily: "var(--omnix-font-display)", marginBottom: 14 }}>Recent Activity</div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {recentActivity.slice(0, 4).map((item, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 9 }}>
-                  <div style={{ width: 26, height: 26, borderRadius: 7, background: `${item.color}18`, border: `1px solid ${item.color}30`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <item.Icon size={12} color={item.color} />
+          {/* Workspace Health */}
+          <div style={{ borderRadius: "var(--omnix-radius)", padding: "18px", background: "var(--omnix-surface)", border: "1px solid var(--omnix-border)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+              <Shield size={14} color="var(--omnix-cyan)" />
+              <span style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 15, fontFamily: "var(--omnix-font-display)" }}>Workspace Health</span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {healthItems.map((item, i) => (
+                <div key={i}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
+                    <span style={{ color: "var(--omnix-text-2)", fontSize: 12 }}>{item.label}</span>
+                    <span style={{ fontSize: 11, fontWeight: 600, color: item.color }}>{item.status}</span>
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ color: "var(--omnix-text)", fontSize: 11, lineHeight: 1.35, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.label}</div>
-                    <div style={{ color: "var(--omnix-text-3)", fontSize: 10, marginTop: 1 }}>{item.time}</div>
+                  <div style={{ height: 4, borderRadius: 2, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                    <div style={{
+                      height: "100%", width: `${item.pct}%`, borderRadius: 2,
+                      background: `linear-gradient(90deg, ${item.color}cc, ${item.color})`,
+                      boxShadow: `0 0 8px ${item.color}60`,
+                      transition: "width 0.8s ease",
+                    }} />
                   </div>
                 </div>
               ))}
@@ -132,52 +183,96 @@ export function Dashboard() {
           </div>
         </div>
 
-        {/* AI Agents */}
-        <div style={{ borderRadius: "var(--omnix-radius)", padding: 18, background: "var(--omnix-surface)", border: "1px solid var(--omnix-border)" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
-            <div>
-              <div style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 14, fontFamily: "var(--omnix-font-display)" }}>AI Agents</div>
-              <div style={{ color: "var(--omnix-text-3)", fontSize: 11, marginTop: 2 }}>Your active AI assistants</div>
-            </div>
-            <button onClick={() => navigate("/chat")} style={{
-              background: "transparent", border: "1px solid var(--omnix-cyan)",
-              color: "var(--omnix-cyan)", borderRadius: 8, padding: "5px 12px",
-              fontSize: 11, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 5,
-              transition: "all 0.2s", fontFamily: "var(--omnix-font)",
-            }}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(0,255,255,0.1)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
-            >Open Chat <ArrowRight size={12} /></button>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 }}>
-            {agents.map((agent, i) => (
-              <div key={i} style={{
-                borderRadius: "var(--omnix-radius-sm)", padding: "14px",
-                background: "rgba(255,255,255,0.02)", border: `1px solid ${agent.color}20`,
-                transition: "all 0.2s", cursor: "pointer",
-              }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = `${agent.color}45`; e.currentTarget.style.background = `${agent.color}06`; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = `${agent.color}20`; e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
-              >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
-                  <div style={{ width: 36, height: 36, borderRadius: 9, background: `${agent.color}15`, border: `1px solid ${agent.color}30`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <agent.Icon size={18} color={agent.color} />
-                  </div>
-                  <span style={{
-                    borderRadius: 20, padding: "2px 8px", fontSize: 10, fontWeight: 600,
-                    background: agent.status === "Active" ? "rgba(0,255,255,0.12)" : agent.status === "Running" ? "rgba(0,232,122,0.12)" : "rgba(255,255,255,0.05)",
-                    color: agent.status === "Active" ? "var(--omnix-cyan)" : agent.status === "Running" ? "var(--omnix-green)" : "var(--omnix-text-3)",
-                    border: agent.status === "Active" ? "1px solid rgba(0,255,255,0.25)" : agent.status === "Running" ? "1px solid rgba(0,232,122,0.25)" : "1px solid transparent",
-                  }}>{agent.status}</span>
-                </div>
-                <div style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 13, fontFamily: "var(--omnix-font-display)", marginBottom: 3 }}>{agent.name}</div>
-                <div style={{ color: "var(--omnix-text-3)", fontSize: 11, marginBottom: 10 }}>{agent.desc}</div>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ color: "var(--omnix-text-2)", fontSize: 11 }}>{agent.queries.toLocaleString()} queries</span>
-                  <ChevronRight size={12} color={agent.color} />
-                </div>
+        {/* Bottom row: Recent Sessions + Team Activity */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", gap: 14 }}>
+
+          {/* Recent AI Sessions */}
+          <div style={{ borderRadius: "var(--omnix-radius)", padding: "18px", background: "var(--omnix-surface)", border: "1px solid var(--omnix-border)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <Clock size={14} color="var(--omnix-cyan)" />
+                <span style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 15, fontFamily: "var(--omnix-font-display)" }}>Recent AI Sessions</span>
               </div>
-            ))}
+              <button onClick={() => navigate("/chat")} style={{ background: "none", border: "none", color: "var(--omnix-cyan)", fontSize: 11, fontWeight: 600, cursor: "pointer", fontFamily: "var(--omnix-font)", display: "flex", alignItems: "center", gap: 4 }}>
+                View all <ArrowRight size={11} />
+              </button>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+              {recentSessions.map((session, i) => (
+                <button key={i} onClick={() => navigate("/chat")} style={{
+                  width: "100%", borderRadius: 10, padding: "12px 14px",
+                  background: "rgba(255,255,255,0.02)", border: "1px solid var(--omnix-border)",
+                  cursor: "pointer", textAlign: "left", transition: "all 0.15s", display: "flex", gap: 12, alignItems: "flex-start",
+                }}
+                  onMouseEnter={e => { e.currentTarget.style.background = `${session.color}06`; e.currentTarget.style.borderColor = `${session.color}25`; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = "var(--omnix-border)"; }}
+                >
+                  <div style={{ width: 30, height: 30, borderRadius: 8, background: `${session.color}15`, border: `1px solid ${session.color}25`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 1 }}>
+                    <session.icon size={13} color={session.color} />
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                      <span style={{ color: "var(--omnix-text)", fontSize: 12, fontWeight: 600 }}>{session.title}</span>
+                      <span style={{ color: "var(--omnix-text-3)", fontSize: 10, flexShrink: 0, marginLeft: 8 }}>{session.time}</span>
+                    </div>
+                    <div style={{ color: "var(--omnix-text-3)", fontSize: 11, lineHeight: 1.45, overflow: "hidden", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" as any }}>{session.preview}</div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Team Activity */}
+          <div style={{ borderRadius: "var(--omnix-radius)", padding: "18px", background: "var(--omnix-surface)", border: "1px solid var(--omnix-border)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+              <Users size={14} color="var(--omnix-cyan)" />
+              <span style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 15, fontFamily: "var(--omnix-font-display)" }}>Team Activity</span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {teamActivity.map((member, i) => (
+                <div key={i} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                  <div style={{
+                    width: 30, height: 30, borderRadius: "50%", flexShrink: 0,
+                    background: `linear-gradient(135deg, ${member.color}, ${member.color}88)`,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 12, fontWeight: 700, color: "#050c17",
+                    border: `1.5px solid ${member.color}50`,
+                    boxShadow: i === 0 ? `0 0 10px ${member.color}40` : "none",
+                  }}>{member.name[0]}</div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 12, lineHeight: 1.4 }}>
+                      <span style={{ color: "var(--omnix-text)", fontWeight: 600 }}>{member.name} </span>
+                      <span style={{ color: "var(--omnix-text-3)" }}>{member.action} </span>
+                      <span style={{ color: member.color, fontWeight: 500 }}>{member.target}</span>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 4 }}>
+                      <span style={{
+                        background: `${member.color}15`, border: `1px solid ${member.color}25`,
+                        borderRadius: 20, padding: "1px 6px", fontSize: 9, fontWeight: 700,
+                        color: member.color, letterSpacing: "0.04em",
+                      }}>{member.badge}</span>
+                      <span style={{ color: "var(--omnix-text-3)", fontSize: 10 }}>{member.time}</span>
+                    </div>
+                  </div>
+                  {i === 0 && (
+                    <div style={{ width: 7, height: 7, borderRadius: "50%", background: "#00e87a", boxShadow: "0 0 6px #00e87a80", flexShrink: 0, marginTop: 5 }} />
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div style={{ marginTop: 16, borderTop: "1px solid var(--omnix-border)", paddingTop: 14 }}>
+              <button onClick={() => navigate("/team")} style={{
+                width: "100%", padding: "8px", borderRadius: 9,
+                background: "rgba(0,255,255,0.05)", border: "1px solid rgba(0,255,255,0.15)",
+                color: "var(--omnix-cyan)", fontSize: 11, fontWeight: 600, cursor: "pointer",
+                fontFamily: "var(--omnix-font)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                transition: "all 0.2s",
+              }}
+                onMouseEnter={e => { e.currentTarget.style.background = "rgba(0,255,255,0.12)"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "rgba(0,255,255,0.05)"; }}
+              ><Users size={11} /> View All Team Members</button>
+            </div>
           </div>
         </div>
 
