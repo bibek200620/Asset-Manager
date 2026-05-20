@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation } from "wouter";
 import { LayoutDashboard, MessageSquare, Layers, Users, BookOpen, BarChart2, Settings, ChevronDown, Plus, Check } from "lucide-react";
-import omnixLogo from "@assets/ChatGPT_Image_May_18,_2026,_04_59_25_AM_1779266648115.png";
+import omnixLogo from "@assets/apple-icon_1779271183095.png";
 
 const navItems = [
   { Icon: LayoutDashboard, label: "Dashboard", path: "/" },
@@ -47,7 +47,7 @@ export function Sidebar() {
 
       {/* Logo */}
       <div style={{
-        padding: "14px 16px",
+        padding: "12px 16px",
         display: "flex", alignItems: "center", gap: 10,
         borderBottom: "1px solid var(--omnix-border)",
         position: "relative",
@@ -55,8 +55,12 @@ export function Sidebar() {
         <img
           src={omnixLogo}
           alt="Omnix"
-          style={{ height: 32, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(0,255,255,0.4))" }}
+          style={{ height: 30, width: 30, objectFit: "contain", borderRadius: 8, flexShrink: 0, filter: "drop-shadow(0 0 8px rgba(0,255,255,0.4))" }}
         />
+        <div>
+          <div style={{ color: "var(--omnix-text)", fontWeight: 700, fontSize: 15, fontFamily: "var(--omnix-font-display)", letterSpacing: "0.04em", lineHeight: 1.2 }}>OMNIX</div>
+          <div style={{ color: "var(--omnix-text-3)", fontSize: 10, letterSpacing: "0.04em" }}>AI Workspace</div>
+        </div>
       </div>
 
       {/* Workspace switcher */}
