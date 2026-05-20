@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AppLayout } from "../components/layout/AppLayout";
-import { Search, Plus, Database, Globe, FileText, MessageSquare, Github, RefreshCw, MoreHorizontal, CheckCircle2, AlertCircle } from "lucide-react";
+import { Search, Plus, Database, Globe, FileText, MessageSquare, Github, RefreshCw, MoreHorizontal, CheckCircle2, AlertCircle, LayoutGrid, List, BookOpen, HardDrive, Link, ClipboardList, Zap, Cloud, Ticket, BotMessageSquare } from "lucide-react";
 
 const iconMap: Record<string, React.FC<any>> = {
   Globe, FileText, MessageSquare, Github, Database,
@@ -15,14 +15,14 @@ const sources = [
 ];
 
 const connectors = [
-  { name: "Notion", icon: "📓", status: "Available", color: "#00FFFF" },
-  { name: "Google Drive", icon: "💾", status: "Available", color: "#9b5cff" },
-  { name: "Confluence", icon: "🌐", status: "Available", color: "#00e87a" },
-  { name: "Jira", icon: "📋", status: "Available", color: "#ffb800" },
-  { name: "Slack", icon: "💬", status: "Available", color: "#3366ff" },
-  { name: "GitHub", icon: "⚡", status: "Available", color: "#00FFFF" },
-  { name: "Salesforce", icon: "☁", status: "Coming soon", color: "#9b5cff" },
-  { name: "Zendesk", icon: "🎫", status: "Coming soon", color: "#00e87a" },
+  { name: "Notion", Icon: BookOpen, status: "Available", color: "#00FFFF" },
+  { name: "Google Drive", Icon: HardDrive, status: "Available", color: "#9b5cff" },
+  { name: "Confluence", Icon: Globe, status: "Available", color: "#00e87a" },
+  { name: "Jira", Icon: ClipboardList, status: "Available", color: "#ffb800" },
+  { name: "Slack", Icon: MessageSquare, status: "Available", color: "#3366ff" },
+  { name: "GitHub", Icon: Github, status: "Available", color: "#00FFFF" },
+  { name: "Salesforce", Icon: Cloud, status: "Coming soon", color: "#9b5cff" },
+  { name: "Zendesk", Icon: Ticket, status: "Coming soon", color: "#00e87a" },
 ];
 
 export function Sources() {
@@ -78,10 +78,11 @@ export function Sources() {
           <div style={{ display: "flex", background: "var(--omnix-surface)", border: "1px solid var(--omnix-border)", borderRadius: 8, overflow: "hidden" }}>
             {(["grid", "list"] as const).map(v => (
               <button key={v} onClick={() => setView(v)} style={{
-                padding: "6px 12px", background: view === v ? "rgba(0,255,255,0.1)" : "transparent",
+                padding: "6px 10px", background: view === v ? "rgba(0,255,255,0.1)" : "transparent",
                 border: "none", color: view === v ? "var(--omnix-cyan)" : "var(--omnix-text-3)",
                 fontSize: 12, cursor: "pointer", fontFamily: "var(--omnix-font)", transition: "all 0.15s",
-              }}>{v === "grid" ? "⊞" : "≡"}</button>
+                display: "flex", alignItems: "center",
+              }}>{v === "grid" ? <LayoutGrid size={14} /> : <List size={14} />}</button>
             ))}
           </div>
           <button style={{
@@ -164,7 +165,9 @@ export function Sources() {
                 onMouseEnter={e => { if (c.status === "Available") { e.currentTarget.style.borderColor = `${c.color}35`; e.currentTarget.style.background = `${c.color}08`; } }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--omnix-border)"; e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
               >
-                <span style={{ fontSize: 18 }}>{c.icon}</span>
+                <div style={{ width: 30, height: 30, borderRadius: 8, background: `${c.color}15`, border: `1px solid ${c.color}25`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <c.Icon size={15} color={c.color} />
+                </div>
                 <span style={{ color: "var(--omnix-text-2)", fontSize: 10, textAlign: "center" }}>{c.name}</span>
               </button>
             ))}
