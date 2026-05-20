@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AppLayout } from "../components/layout/AppLayout";
 import { useLocation } from "wouter";
-import { Zap, TrendingUp, Users, Database, ArrowRight, Bot, FileText, BarChart2, Globe, ChevronRight } from "lucide-react";
+import { Zap, TrendingUp, Users, Database, ArrowRight, Bot, FileText, BarChart2, Globe, ChevronRight, Search, Code } from "lucide-react";
 import { AreaChart, Area, ResponsiveContainer, Tooltip } from "recharts";
 
 const sparkData = [
@@ -16,17 +16,17 @@ const activityData = [
 ];
 
 const recentActivity = [
-  { icon: Bot, label: "AI completed research on market trends", time: "2 min ago", color: "#00FFFF", badge: "Completed" },
-  { icon: FileText, label: "Sarah uploaded 3 new documents", time: "8 min ago", color: "#9b5cff", badge: "Sources" },
-  { icon: Users, label: "Marcus joined the workspace", time: "24 min ago", color: "#00e87a", badge: "Team" },
-  { icon: BarChart2, label: "Monthly analytics report generated", time: "1h ago", color: "#ffb800", badge: "Analytics" },
-  { icon: Globe, label: "Knowledge base synced with Notion", time: "2h ago", color: "#3366ff", badge: "Sync" },
+  { Icon: Bot, label: "AI completed research on market trends", time: "2 min ago", color: "#00FFFF" },
+  { Icon: FileText, label: "Sarah uploaded 3 new documents", time: "8 min ago", color: "#9b5cff" },
+  { Icon: Users, label: "Marcus joined the workspace", time: "24 min ago", color: "#00e87a" },
+  { Icon: BarChart2, label: "Monthly analytics report generated", time: "1h ago", color: "#ffb800" },
+  { Icon: Globe, label: "Knowledge base synced with Notion", time: "2h ago", color: "#3366ff" },
 ];
 
 const agents = [
-  { name: "Research Agent", desc: "Web & document research", status: "Active", icon: "🔍", queries: 248, color: "#00FFFF" },
-  { name: "Code Assistant", desc: "Code generation & review", status: "Idle", icon: "💻", queries: 892, color: "#9b5cff" },
-  { name: "Data Analyst", desc: "Charts & data insights", status: "Running", icon: "📊", queries: 156, color: "#00e87a" },
+  { name: "Research Agent", desc: "Web and document research", status: "Active", Icon: Search, queries: 248, color: "#00FFFF" },
+  { name: "Code Assistant", desc: "Code generation and review", status: "Idle", Icon: Code, queries: 892, color: "#9b5cff" },
+  { name: "Data Analyst", desc: "Charts and data insights", status: "Running", Icon: BarChart2, queries: 156, color: "#00e87a" },
 ];
 
 const statCards = [
@@ -92,7 +92,7 @@ export function Dashboard() {
                 <div style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 14, fontFamily: "var(--omnix-font-display)" }}>Query Activity</div>
                 <div style={{ color: "var(--omnix-text-3)", fontSize: 11, marginTop: 2 }}>Queries per hour, last 24h</div>
               </div>
-              <span style={{ color: "var(--omnix-cyan)", fontSize: 11, cursor: "pointer" }}>View Details →</span>
+              <button onClick={() => navigate("/analytics")} style={{ background: "none", border: "none", color: "var(--omnix-cyan)", fontSize: 11, cursor: "pointer", fontFamily: "var(--omnix-font)" }}>View Details</button>
             </div>
             <div style={{ height: 140 }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -120,7 +120,7 @@ export function Dashboard() {
               {recentActivity.slice(0, 4).map((item, i) => (
                 <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 9 }}>
                   <div style={{ width: 26, height: 26, borderRadius: 7, background: `${item.color}18`, border: `1px solid ${item.color}30`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <item.icon size={12} color={item.color} />
+                    <item.Icon size={12} color={item.color} />
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ color: "var(--omnix-text)", fontSize: 11, lineHeight: 1.35, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.label}</div>
@@ -160,7 +160,9 @@ export function Dashboard() {
                 onMouseLeave={e => { e.currentTarget.style.borderColor = `${agent.color}20`; e.currentTarget.style.background = "rgba(255,255,255,0.02)"; }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
-                  <div style={{ fontSize: 24 }}>{agent.icon}</div>
+                  <div style={{ width: 36, height: 36, borderRadius: 9, background: `${agent.color}15`, border: `1px solid ${agent.color}30`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <agent.Icon size={18} color={agent.color} />
+                  </div>
                   <span style={{
                     borderRadius: 20, padding: "2px 8px", fontSize: 10, fontWeight: 600,
                     background: agent.status === "Active" ? "rgba(0,255,255,0.12)" : agent.status === "Running" ? "rgba(0,232,122,0.12)" : "rgba(255,255,255,0.05)",

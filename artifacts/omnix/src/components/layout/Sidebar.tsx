@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { useLocation } from "wouter";
+import { LayoutDashboard, MessageSquare, Layers, Users, BookOpen, BarChart2, Settings, ChevronDown, Plus, Check } from "lucide-react";
+import omnixLogo from "@assets/ChatGPT_Image_May_18,_2026,_04_59_25_AM_1779266648115.png";
 
 const navItems = [
-  { icon: "⊞", label: "Dashboard", path: "/" },
-  { icon: "◈", label: "AI Chat", path: "/chat", badge: "3" },
-  { icon: "⬡", label: "Workspaces", path: "/workspace" },
-  { icon: "◫", label: "Team", path: "/team" },
-  { icon: "⊙", label: "Sources", path: "/sources" },
-  { icon: "▤", label: "Analytics", path: "/analytics" },
+  { Icon: LayoutDashboard, label: "Dashboard", path: "/" },
+  { Icon: MessageSquare, label: "AI Chat", path: "/chat", badge: "3" },
+  { Icon: Layers, label: "Workspaces", path: "/workspace" },
+  { Icon: Users, label: "Team", path: "/team" },
+  { Icon: BookOpen, label: "Sources", path: "/sources" },
+  { Icon: BarChart2, label: "Analytics", path: "/analytics" },
 ];
 
 const workspaces = [
@@ -43,43 +45,23 @@ export function Sidebar() {
         pointerEvents: "none",
       }} />
 
+      {/* Logo */}
       <div style={{
-        padding: "18px 18px 14px",
+        padding: "14px 16px",
         display: "flex", alignItems: "center", gap: 10,
         borderBottom: "1px solid var(--omnix-border)",
         position: "relative",
       }}>
-        <div style={{ width: 34, height: 34, flexShrink: 0, position: "relative" }}>
-          <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="17,2 30,9 30,25 17,32 4,25 4,9" fill="none" stroke="#00FFFF" strokeWidth="1.5" opacity="0.9"/>
-            <polygon points="17,7 26,12 26,22 17,27 8,22 8,12" fill="none" stroke="#00FFFF" strokeWidth="1" opacity="0.5"/>
-            <circle cx="17" cy="2" r="1.5" fill="#00FFFF"/>
-            <circle cx="30" cy="9" r="1.5" fill="#00FFFF"/>
-            <circle cx="30" cy="25" r="1.5" fill="#00FFFF"/>
-            <circle cx="17" cy="32" r="1.5" fill="#00FFFF"/>
-            <circle cx="4" cy="25" r="1.5" fill="#00FFFF"/>
-            <circle cx="4" cy="9" r="1.5" fill="#00FFFF"/>
-            <line x1="17" y1="2" x2="26" y2="12" stroke="#00FFFF" strokeWidth="0.7" opacity="0.5"/>
-            <line x1="30" y1="9" x2="26" y2="22" stroke="#00FFFF" strokeWidth="0.7" opacity="0.5"/>
-            <line x1="4" y1="9" x2="8" y2="22" stroke="#00FFFF" strokeWidth="0.7" opacity="0.5"/>
-            <circle cx="17" cy="17" r="2.5" fill="#00FFFF" opacity="0.8"/>
-          </svg>
-          <div style={{
-            position: "absolute", inset: 0, borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(0,255,255,0.15) 0%, transparent 70%)",
-          }}/>
-        </div>
-        <div>
-          <div style={{
-            color: "#fff", fontFamily: "var(--omnix-font-display)",
-            fontWeight: 700, fontSize: 16, letterSpacing: "0.06em",
-            textTransform: "uppercase",
-          }}>OMNIX</div>
-          <div style={{ color: "var(--omnix-text-3)", fontSize: 10, letterSpacing: "0.05em" }}>AI Workspace</div>
-        </div>
+        <img
+          src={omnixLogo}
+          alt="Omnix"
+          style={{ height: 32, width: "auto", objectFit: "contain", filter: "drop-shadow(0 0 8px rgba(0,255,255,0.4))" }}
+        />
       </div>
 
+      {/* Workspace switcher */}
       <div style={{ padding: "10px 10px 6px", position: "relative" }}>
+        <div style={{ color: "var(--omnix-text-3)", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", padding: "2px 4px 6px" }}>Workspace</div>
         <button
           onClick={() => setWsOpen(!wsOpen)}
           style={{
@@ -105,7 +87,7 @@ export function Sidebar() {
             <div style={{ color: "var(--omnix-text)", fontSize: 12, fontWeight: 500, lineHeight: 1.3 }}>{currentWs.name}</div>
             <div style={{ color: "var(--omnix-text-3)", fontSize: 10 }}>{currentWs.plan} Plan</div>
           </div>
-          <span style={{ color: "var(--omnix-text-3)", fontSize: 10 }}>⌄</span>
+          <ChevronDown size={12} color="var(--omnix-text-3)" style={{ flexShrink: 0, transform: wsOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }} />
         </button>
 
         {wsOpen && (
@@ -137,7 +119,7 @@ export function Sidebar() {
                   <div style={{ color: "var(--omnix-text)", fontSize: 12, fontWeight: 500 }}>{ws.name}</div>
                   <div style={{ color: "var(--omnix-text-3)", fontSize: 10 }}>{ws.plan}</div>
                 </div>
-                {ws.name === currentWs.name && <span style={{ color: ws.color, fontSize: 11 }}>✓</span>}
+                {ws.name === currentWs.name && <Check size={12} color={ws.color} />}
               </button>
             ))}
             <div style={{ borderTop: "1px solid var(--omnix-border)", padding: "5px" }}>
@@ -150,12 +132,13 @@ export function Sidebar() {
               }}
                 onMouseEnter={e => { e.currentTarget.style.background = "var(--omnix-surface)"; e.currentTarget.style.color = "var(--omnix-text-cyan)"; }}
                 onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--omnix-text-3)"; }}
-              ><span>+</span> New Workspace</button>
+              ><Plus size={11} /> New Workspace</button>
             </div>
           </div>
         )}
       </div>
 
+      {/* Nav */}
       <nav style={{ flex: 1, padding: "4px 10px", overflowY: "auto" }}>
         <div style={{ color: "var(--omnix-text-3)", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", padding: "8px 8px 4px" }}>Navigation</div>
         {navItems.map((item, i) => {
@@ -182,10 +165,11 @@ export function Sidebar() {
                   boxShadow: "var(--omnix-glow-sm)",
                 }} />
               )}
-              <span style={{
-                fontSize: 13, width: 18, textAlign: "center",
-                color: active ? "var(--omnix-cyan)" : "var(--omnix-text-3)",
-              }}>{item.icon}</span>
+              <item.Icon
+                size={15}
+                color={active ? "var(--omnix-cyan)" : "rgba(255,255,255,0.35)"}
+                strokeWidth={active ? 2 : 1.5}
+              />
               <span style={{
                 flex: 1, fontSize: 13, textAlign: "left",
                 fontWeight: active ? 500 : 400,
@@ -205,7 +189,7 @@ export function Sidebar() {
           );
         })}
 
-        <div style={{ color: "var(--omnix-text-3)", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", padding: "14px 8px 4px" }}>Settings</div>
+        <div style={{ color: "var(--omnix-text-3)", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", padding: "14px 8px 4px" }}>Account</div>
         <button onClick={() => navigate("/settings")} style={{
           width: "100%", padding: "8px 10px",
           borderRadius: "var(--omnix-radius-sm)",
@@ -227,11 +211,12 @@ export function Sidebar() {
               boxShadow: "var(--omnix-glow-sm)",
             }} />
           )}
-          <span style={{ fontSize: 13, width: 18, textAlign: "center", color: isActive("/settings") ? "var(--omnix-cyan)" : "var(--omnix-text-3)" }}>⚙</span>
+          <Settings size={15} color={isActive("/settings") ? "var(--omnix-cyan)" : "rgba(255,255,255,0.35)"} strokeWidth={isActive("/settings") ? 2 : 1.5} />
           <span style={{ flex: 1, fontSize: 13, textAlign: "left", fontWeight: isActive("/settings") ? 500 : 400, color: isActive("/settings") ? "var(--omnix-text)" : "var(--omnix-text-2)", fontFamily: "var(--omnix-font)" }}>Settings</span>
         </button>
       </nav>
 
+      {/* User */}
       <div style={{ padding: "10px", borderTop: "1px solid var(--omnix-border)" }}>
         <button style={{
           width: "100%", padding: "8px 10px",
@@ -255,7 +240,7 @@ export function Sidebar() {
             <div style={{ color: "var(--omnix-text)", fontSize: 12, fontWeight: 500 }}>Alex Chen</div>
             <div style={{ color: "var(--omnix-text-3)", fontSize: 10 }}>Founder · Online</div>
           </div>
-          <span style={{ color: "var(--omnix-text-3)", fontSize: 11 }}>⋯</span>
+          <span style={{ color: "var(--omnix-text-3)", fontSize: 16, lineHeight: 1 }}>···</span>
         </button>
       </div>
     </aside>

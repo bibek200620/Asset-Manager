@@ -1,39 +1,90 @@
 import React, { useState } from "react";
 import { AppLayout } from "../components/layout/AppLayout";
-import { Plus, Settings, Users, Database, Zap, Crown, MoreHorizontal, Globe } from "lucide-react";
+import { Plus, Settings, Users, Database, Zap, MoreHorizontal, ChevronRight, ChevronDown, Layers, Crown, Globe } from "lucide-react";
 
-const workspaces = [
+interface SubSpace {
+  id: number;
+  name: string;
+  desc: string;
+  color: string;
+  members: number;
+  sources: number;
+  queries: number;
+}
+
+interface WorkspaceData {
+  id: number;
+  name: string;
+  desc: string;
+  plan: string;
+  color: string;
+  members: number;
+  sources: number;
+  queries: number;
+  storage: string;
+  agents: string[];
+  subSpaces: SubSpace[];
+}
+
+const workspaces: WorkspaceData[] = [
   {
-    id: 1, name: "Omnix Labs", desc: "Main product workspace with full AI capabilities", plan: "Pro", color: "#00FFFF",
-    members: 12, sources: 28, queries: 18420, storage: "4.2 GB", icon: "🔬",
-    agents: ["Research", "Code", "Analytics"], status: "active",
+    id: 1,
+    name: "Omnix Labs",
+    desc: "Super workspace — all teams collaborate here. Sub-spaces inherit access from this root.",
+    plan: "Pro",
+    color: "#00FFFF",
+    members: 24,
+    sources: 48,
+    queries: 18420,
+    storage: "4.2 GB",
+    agents: ["Research", "Code", "Analytics", "Creative"],
+    subSpaces: [
+      { id: 11, name: "Design Team", desc: "UI/UX, brand, and creative direction", color: "#9b5cff", members: 5, sources: 9, queries: 3210 },
+      { id: 12, name: "Dev Team", desc: "Engineering, architecture, and code review", color: "#00e87a", members: 8, sources: 18, queries: 7840 },
+      { id: 13, name: "Marketing", desc: "Content, campaigns, and growth strategy", color: "#ffb800", members: 4, sources: 7, queries: 2100 },
+      { id: 14, name: "Product", desc: "Roadmaps, specs, and user research", color: "#3366ff", members: 5, sources: 12, queries: 4180 },
+      { id: 15, name: "Data & Analytics", desc: "Metrics, BI reports, and data pipelines", color: "#ff4df4", members: 2, sources: 2, queries: 1090 },
+    ],
   },
   {
-    id: 2, name: "Design Studio", desc: "Creative workspace for design team", plan: "Team", color: "#9b5cff",
-    members: 5, sources: 9, queries: 3210, storage: "1.1 GB", icon: "🎨",
-    agents: ["Creative", "Research"], status: "active",
-  },
-  {
-    id: 3, name: "Dev Space", desc: "Engineering and development workspace", plan: "Free", color: "#00e87a",
-    members: 3, sources: 14, queries: 1840, storage: "2.8 GB", icon: "💻",
-    agents: ["Code"], status: "active",
+    id: 2,
+    name: "Client Projects",
+    desc: "External client workspace — isolated from internal data.",
+    plan: "Team",
+    color: "#9b5cff",
+    members: 8,
+    sources: 12,
+    queries: 4310,
+    storage: "1.1 GB",
+    agents: ["Research", "Writing"],
+    subSpaces: [
+      { id: 21, name: "Alpha Corp", desc: "Q3 deliverables and communication", color: "#00FFFF", members: 3, sources: 5, queries: 1200 },
+      { id: 22, name: "Beta Inc", desc: "Onboarding and integration project", color: "#00e87a", members: 2, sources: 3, queries: 980 },
+    ],
   },
 ];
 
 const plans = [
-  { name: "Free", price: "$0", features: ["3 members", "10 sources", "10K queries/mo", "1 AI agent"], color: "#00e87a", current: false },
-  { name: "Team", price: "$29", features: ["20 members", "50 sources", "100K queries/mo", "5 AI agents", "Analytics"], color: "#9b5cff", current: false },
-  { name: "Pro", price: "$99", features: ["Unlimited members", "Unlimited sources", "1M queries/mo", "Unlimited agents", "Advanced Analytics", "Priority support"], color: "#00FFFF", current: true },
+  { name: "Free", price: "$0", features: ["3 members", "2 sub-spaces", "10 sources", "10K queries/mo", "1 AI agent"], color: "#00e87a", current: false },
+  { name: "Team", price: "$29", features: ["20 members", "10 sub-spaces", "50 sources", "100K queries/mo", "5 AI agents", "Analytics"], color: "#9b5cff", current: false },
+  { name: "Pro", price: "$99", features: ["Unlimited members", "Unlimited sub-spaces", "Unlimited sources", "1M queries/mo", "Unlimited agents", "Advanced Analytics", "Priority support"], color: "#00FFFF", current: true },
 ];
 
 export function Workspace() {
   const [activeWs, setActiveWs] = useState(1);
+  const [expandedWs, setExpandedWs] = useState<number[]>([1]);
+  const [activeSubSpace, setActiveSubSpace] = useState<number | null>(null);
   const [tab, setTab] = useState<"workspaces" | "billing">("workspaces");
 
   const current = workspaces.find(w => w.id === activeWs) || workspaces[0];
+  const selectedSubSpace = current.subSpaces.find(s => s.id === activeSubSpace) || null;
+
+  const toggleExpand = (id: number) => {
+    setExpandedWs(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  };
 
   return (
-    <AppLayout headerTitle="Workspaces" headerSubtitle="Manage your AI workspaces">
+    <AppLayout headerTitle="Workspaces" headerSubtitle="Manage your super workspaces and sub-spaces">
       <div style={{ height: "100%", overflowY: "auto", padding: "20px", display: "flex", flexDirection: "column", gap: 18, animation: "omnix-fade-in 0.3s ease" }}>
 
         {/* Tabs */}
@@ -50,114 +101,226 @@ export function Workspace() {
         </div>
 
         {tab === "workspaces" && (
-          <>
-            {/* Workspace list */}
-            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: 16 }}>
+
+            {/* Workspace tree */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              <div style={{ color: "var(--omnix-text-3)", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", padding: "2px 4px 4px" }}>Super Workspaces</div>
               {workspaces.map(ws => (
-                <div key={ws.id}
-                  onClick={() => setActiveWs(ws.id)}
-                  style={{
-                    borderRadius: "var(--omnix-radius)", padding: "16px 20px",
-                    background: activeWs === ws.id ? `${ws.color}08` : "var(--omnix-surface)",
-                    border: `1px solid ${activeWs === ws.id ? `${ws.color}35` : "var(--omnix-border)"}`,
-                    cursor: "pointer", transition: "all 0.2s",
-                    display: "flex", alignItems: "center", gap: 16,
-                    boxShadow: activeWs === ws.id ? `0 0 24px ${ws.color}10` : "none",
-                  }}
-                  onMouseEnter={e => { if (activeWs !== ws.id) { e.currentTarget.style.borderColor = `${ws.color}25`; e.currentTarget.style.background = "var(--omnix-surface-hover)"; } }}
-                  onMouseLeave={e => { if (activeWs !== ws.id) { e.currentTarget.style.borderColor = "var(--omnix-border)"; e.currentTarget.style.background = "var(--omnix-surface)"; } }}
-                >
-                  <div style={{ width: 46, height: 46, borderRadius: 12, background: `${ws.color}18`, border: `1.5px solid ${ws.color}40`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, flexShrink: 0, boxShadow: `0 0 16px ${ws.color}25` }}>{ws.icon}</div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 3 }}>
-                      <span style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 15, fontFamily: "var(--omnix-font-display)" }}>{ws.name}</span>
-                      <span style={{
-                        background: `${ws.color}18`, border: `1px solid ${ws.color}35`,
-                        borderRadius: 20, padding: "2px 9px", fontSize: 10, fontWeight: 700, color: ws.color,
-                      }}>{ws.plan}</span>
+                <div key={ws.id}>
+                  {/* Super workspace row */}
+                  <div
+                    style={{
+                      borderRadius: "var(--omnix-radius-sm)", padding: "10px 12px",
+                      background: activeWs === ws.id && !activeSubSpace ? `${ws.color}08` : "var(--omnix-surface)",
+                      border: `1px solid ${activeWs === ws.id && !activeSubSpace ? `${ws.color}35` : "var(--omnix-border)"}`,
+                      cursor: "pointer", transition: "all 0.15s", display: "flex", alignItems: "center", gap: 10,
+                      boxShadow: activeWs === ws.id && !activeSubSpace ? `0 0 18px ${ws.color}10` : "none",
+                    }}
+                    onClick={() => { setActiveWs(ws.id); setActiveSubSpace(null); }}
+                  >
+                    <button
+                      onClick={e => { e.stopPropagation(); toggleExpand(ws.id); }}
+                      style={{ background: "none", border: "none", cursor: "pointer", padding: 2, color: "var(--omnix-text-3)", flexShrink: 0 }}
+                    >
+                      {expandedWs.includes(ws.id)
+                        ? <ChevronDown size={13} />
+                        : <ChevronRight size={13} />}
+                    </button>
+                    <div style={{ width: 26, height: 26, borderRadius: 6, background: `${ws.color}18`, border: `1px solid ${ws.color}40`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700, color: ws.color, flexShrink: 0 }}>{ws.name[0]}</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ color: "var(--omnix-text)", fontSize: 13, fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ws.name}</div>
+                      <div style={{ color: "var(--omnix-text-3)", fontSize: 10 }}>{ws.members} members · {ws.subSpaces.length} sub-spaces</div>
                     </div>
-                    <div style={{ color: "var(--omnix-text-3)", fontSize: 12 }}>{ws.desc}</div>
+                    <button style={{ background: "none", border: "none", cursor: "pointer", color: "var(--omnix-text-3)", padding: 2, flexShrink: 0 }} onClick={e => e.stopPropagation()}>
+                      <MoreHorizontal size={14} />
+                    </button>
                   </div>
-                  <div style={{ display: "flex", gap: 18 }}>
-                    {[
-                      { Icon: Users, val: ws.members, label: "members" },
-                      { Icon: Database, val: ws.sources, label: "sources" },
-                      { Icon: Zap, val: ws.queries.toLocaleString(), label: "queries" },
-                    ].map((stat, i) => (
-                      <div key={i} style={{ textAlign: "center" }}>
-                        <div style={{ color: "var(--omnix-text)", fontWeight: 700, fontSize: 16, fontFamily: "var(--omnix-font-display)" }}>{stat.val}</div>
-                        <div style={{ color: "var(--omnix-text-3)", fontSize: 10 }}>{stat.label}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <button style={{ background: "none", border: "none", color: "var(--omnix-text-3)", cursor: "pointer", padding: 4, flexShrink: 0 }} onClick={e => e.stopPropagation()}>
-                    <MoreHorizontal size={16} />
-                  </button>
+
+                  {/* Sub-spaces */}
+                  {expandedWs.includes(ws.id) && (
+                    <div style={{ marginLeft: 16, marginTop: 4, display: "flex", flexDirection: "column", gap: 3, borderLeft: `1px solid ${ws.color}25`, paddingLeft: 12 }}>
+                      {ws.subSpaces.map(sub => (
+                        <button
+                          key={sub.id}
+                          onClick={() => { setActiveWs(ws.id); setActiveSubSpace(sub.id); }}
+                          style={{
+                            width: "100%", padding: "7px 10px",
+                            borderRadius: 7,
+                            background: activeSubSpace === sub.id ? `${sub.color}0d` : "transparent",
+                            border: `1px solid ${activeSubSpace === sub.id ? `${sub.color}30` : "transparent"}`,
+                            display: "flex", alignItems: "center", gap: 8,
+                            cursor: "pointer", transition: "all 0.15s", textAlign: "left",
+                          }}
+                          onMouseEnter={e => { if (activeSubSpace !== sub.id) e.currentTarget.style.background = "var(--omnix-surface)"; }}
+                          onMouseLeave={e => { if (activeSubSpace !== sub.id) e.currentTarget.style.background = "transparent"; }}
+                        >
+                          <div style={{ width: 8, height: 8, borderRadius: "50%", background: sub.color, boxShadow: `0 0 6px ${sub.color}80`, flexShrink: 0 }} />
+                          <span style={{ color: activeSubSpace === sub.id ? "var(--omnix-text)" : "var(--omnix-text-2)", fontSize: 12, flex: 1 }}>{sub.name}</span>
+                          <span style={{ color: "var(--omnix-text-3)", fontSize: 10 }}>{sub.members}</span>
+                        </button>
+                      ))}
+                      <button style={{
+                        width: "100%", padding: "6px 10px",
+                        borderRadius: 7, background: "transparent",
+                        border: "1px dashed rgba(255,255,255,0.1)",
+                        display: "flex", alignItems: "center", gap: 6,
+                        cursor: "pointer", color: "var(--omnix-text-3)", fontSize: 11, fontFamily: "var(--omnix-font)", transition: "all 0.15s",
+                      }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = `${ws.color}40`; e.currentTarget.style.color = ws.color; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.1)"; e.currentTarget.style.color = "var(--omnix-text-3)"; }}
+                      >
+                        <Plus size={11} /> New sub-space
+                      </button>
+                    </div>
+                  )}
                 </div>
               ))}
 
               <button style={{
-                borderRadius: "var(--omnix-radius)", padding: "14px 20px",
+                borderRadius: "var(--omnix-radius-sm)", padding: "10px 12px",
                 background: "transparent", border: "2px dashed var(--omnix-border)",
                 color: "var(--omnix-text-3)", cursor: "pointer",
-                display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                fontSize: 13, fontFamily: "var(--omnix-font)", transition: "all 0.2s",
+                display: "flex", alignItems: "center", gap: 7,
+                fontSize: 12, fontFamily: "var(--omnix-font)", transition: "all 0.2s", marginTop: 4,
               }}
                 onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(0,255,255,0.3)"; e.currentTarget.style.color = "var(--omnix-cyan)"; }}
                 onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--omnix-border)"; e.currentTarget.style.color = "var(--omnix-text-3)"; }}
-              ><Plus size={15} /> Create New Workspace</button>
+              ><Plus size={14} /> New super workspace</button>
             </div>
 
-            {/* Workspace detail */}
-            <div style={{ borderRadius: "var(--omnix-radius)", padding: "20px", background: "var(--omnix-surface)", border: `1px solid ${current.color}25` }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 18 }}>
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <span style={{ fontSize: 20 }}>{current.icon}</span>
-                    <span style={{ color: "var(--omnix-text)", fontWeight: 700, fontSize: 18, fontFamily: "var(--omnix-font-display)" }}>{current.name}</span>
+            {/* Detail panel */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+              {selectedSubSpace ? (
+                /* Sub-space detail */
+                <div style={{ borderRadius: "var(--omnix-radius)", padding: "20px", background: "var(--omnix-surface)", border: `1px solid ${selectedSubSpace.color}25` }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 18 }}>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+                        <div style={{ width: 10, height: 10, borderRadius: "50%", background: selectedSubSpace.color, boxShadow: `0 0 10px ${selectedSubSpace.color}80` }} />
+                        <span style={{ color: "var(--omnix-text)", fontWeight: 700, fontSize: 20, fontFamily: "var(--omnix-font-display)" }}>{selectedSubSpace.name}</span>
+                        <span style={{ background: `${selectedSubSpace.color}15`, border: `1px solid ${selectedSubSpace.color}35`, borderRadius: 20, padding: "2px 9px", fontSize: 11, color: selectedSubSpace.color }}>Sub-space</span>
+                      </div>
+                      <div style={{ color: "var(--omnix-text-3)", fontSize: 13 }}>{selectedSubSpace.desc}</div>
+                    </div>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <button style={{ padding: "7px 14px", borderRadius: 8, background: "var(--omnix-surface-2)", border: "1px solid var(--omnix-border)", color: "var(--omnix-text-2)", fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", gap: 5, fontFamily: "var(--omnix-font)" }}>
+                        <Settings size={13} /> Manage
+                      </button>
+                    </div>
                   </div>
-                  <div style={{ color: "var(--omnix-text-3)", fontSize: 12, marginTop: 4 }}>{current.desc}</div>
-                </div>
-                <div style={{ display: "flex", gap: 8 }}>
-                  <button style={{ padding: "7px 14px", borderRadius: 8, background: "var(--omnix-surface-2)", border: "1px solid var(--omnix-border)", color: "var(--omnix-text-2)", fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", gap: 5, fontFamily: "var(--omnix-font)" }}>
-                    <Settings size={13} /> Settings
-                  </button>
-                  <button style={{ padding: "7px 14px", borderRadius: 8, background: "transparent", border: `1px solid ${current.color}`, color: current.color, fontSize: 12, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 5, fontFamily: "var(--omnix-font)", transition: "all 0.2s" }}
-                    onMouseEnter={e => { e.currentTarget.style.background = `${current.color}15`; }}
-                    onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
-                  ><Globe size={13} /> Open</button>
-                </div>
-              </div>
-
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 18 }}>
-                {[
-                  { label: "Members", value: current.members, Icon: Users, color: current.color },
-                  { label: "Sources", value: current.sources, Icon: Database, color: "#9b5cff" },
-                  { label: "Queries", value: current.queries.toLocaleString(), Icon: Zap, color: "#00e87a" },
-                  { label: "Storage", value: current.storage, Icon: Database, color: "#ffb800" },
-                ].map((stat, i) => (
-                  <div key={i} style={{ borderRadius: 10, padding: "12px", background: `${stat.color}06`, border: `1px solid ${stat.color}20`, textAlign: "center" }}>
-                    <stat.Icon size={18} color={stat.color} style={{ marginBottom: 6 }} />
-                    <div style={{ color: "var(--omnix-text)", fontWeight: 700, fontSize: 18, fontFamily: "var(--omnix-font-display)" }}>{stat.value}</div>
-                    <div style={{ color: "var(--omnix-text-3)", fontSize: 11 }}>{stat.label}</div>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 18 }}>
+                    {[
+                      { label: "Members", value: selectedSubSpace.members, Icon: Users, color: selectedSubSpace.color },
+                      { label: "Sources", value: selectedSubSpace.sources, Icon: Database, color: "#9b5cff" },
+                      { label: "Queries", value: selectedSubSpace.queries.toLocaleString(), Icon: Zap, color: "#00e87a" },
+                    ].map((s, i) => (
+                      <div key={i} style={{ borderRadius: 10, padding: "14px", background: `${s.color}06`, border: `1px solid ${s.color}20`, textAlign: "center" }}>
+                        <s.Icon size={20} color={s.color} style={{ marginBottom: 6 }} />
+                        <div style={{ color: "var(--omnix-text)", fontWeight: 700, fontSize: 20, fontFamily: "var(--omnix-font-display)" }}>{s.value}</div>
+                        <div style={{ color: "var(--omnix-text-3)", fontSize: 11 }}>{s.label}</div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-
-              <div>
-                <div style={{ color: "var(--omnix-text-2)", fontSize: 12, fontWeight: 600, marginBottom: 10, letterSpacing: "0.05em" }}>ACTIVE AI AGENTS</div>
-                <div style={{ display: "flex", gap: 8 }}>
-                  {current.agents.map((agent, i) => (
-                    <div key={i} style={{ borderRadius: 8, padding: "6px 14px", background: `${current.color}0f`, border: `1px solid ${current.color}25`, color: current.color, fontSize: 12, fontWeight: 500 }}>{agent} Agent</div>
-                  ))}
-                  <button style={{ borderRadius: 8, padding: "6px 14px", background: "transparent", border: "1px dashed var(--omnix-border)", color: "var(--omnix-text-3)", fontSize: 12, cursor: "pointer", transition: "all 0.15s" }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(0,255,255,0.3)"; e.currentTarget.style.color = "var(--omnix-cyan)"; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--omnix-border)"; e.currentTarget.style.color = "var(--omnix-text-3)"; }}
-                  >+ Add Agent</button>
+                  <div style={{ padding: "12px 16px", borderRadius: 9, background: "rgba(255,255,255,0.02)", border: "1px solid var(--omnix-border)", display: "flex", alignItems: "center", gap: 10 }}>
+                    <Layers size={14} color="var(--omnix-text-3)" />
+                    <span style={{ color: "var(--omnix-text-3)", fontSize: 12 }}>Part of </span>
+                    <span style={{ color: "var(--omnix-text)", fontSize: 12, fontWeight: 500 }}>{current.name}</span>
+                    <span style={{ color: "var(--omnix-text-3)", fontSize: 12 }}>super workspace · inherits permissions and AI agents</span>
+                  </div>
                 </div>
-              </div>
+              ) : (
+                /* Super workspace detail */
+                <div style={{ borderRadius: "var(--omnix-radius)", padding: "20px", background: "var(--omnix-surface)", border: `1px solid ${current.color}25` }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 18 }}>
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 4 }}>
+                        <Layers size={20} color={current.color} />
+                        <span style={{ color: "var(--omnix-text)", fontWeight: 700, fontSize: 20, fontFamily: "var(--omnix-font-display)" }}>{current.name}</span>
+                        <span style={{ background: `${current.color}15`, border: `1px solid ${current.color}35`, borderRadius: 20, padding: "2px 9px", fontSize: 11, color: current.color, fontWeight: 700 }}>Super Workspace</span>
+                        <span style={{ background: `${current.color}15`, border: `1px solid ${current.color}35`, borderRadius: 20, padding: "2px 9px", fontSize: 11, color: current.color }}>{current.plan}</span>
+                      </div>
+                      <div style={{ color: "var(--omnix-text-3)", fontSize: 13 }}>{current.desc}</div>
+                    </div>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <button style={{ padding: "7px 14px", borderRadius: 8, background: "var(--omnix-surface-2)", border: "1px solid var(--omnix-border)", color: "var(--omnix-text-2)", fontSize: 12, cursor: "pointer", display: "flex", alignItems: "center", gap: 5, fontFamily: "var(--omnix-font)" }}>
+                        <Settings size={13} /> Settings
+                      </button>
+                      <button style={{ padding: "7px 14px", borderRadius: 8, background: "transparent", border: `1px solid ${current.color}`, color: current.color, fontSize: 12, fontWeight: 600, cursor: "pointer", display: "flex", alignItems: "center", gap: 5, fontFamily: "var(--omnix-font)", transition: "all 0.2s" }}
+                        onMouseEnter={e => { e.currentTarget.style.background = `${current.color}15`; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                      ><Globe size={13} /> Open</button>
+                    </div>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12, marginBottom: 20 }}>
+                    {[
+                      { label: "Members", value: current.members, Icon: Users, color: current.color },
+                      { label: "Sub-spaces", value: current.subSpaces.length, Icon: Layers, color: "#9b5cff" },
+                      { label: "Sources", value: current.sources, Icon: Database, color: "#00e87a" },
+                      { label: "Queries", value: current.queries.toLocaleString(), Icon: Zap, color: "#ffb800" },
+                    ].map((s, i) => (
+                      <div key={i} style={{ borderRadius: 10, padding: "12px", background: `${s.color}06`, border: `1px solid ${s.color}20`, textAlign: "center" }}>
+                        <s.Icon size={18} color={s.color} style={{ marginBottom: 6 }} />
+                        <div style={{ color: "var(--omnix-text)", fontWeight: 700, fontSize: 18, fontFamily: "var(--omnix-font-display)" }}>{s.value}</div>
+                        <div style={{ color: "var(--omnix-text-3)", fontSize: 11 }}>{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Sub-spaces grid */}
+                  <div style={{ marginBottom: 16 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                      <div style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 14, fontFamily: "var(--omnix-font-display)" }}>Sub-spaces</div>
+                      <button style={{ padding: "5px 12px", borderRadius: 7, background: "transparent", border: `1px solid ${current.color}`, color: current.color, fontSize: 11, cursor: "pointer", display: "flex", alignItems: "center", gap: 5, fontFamily: "var(--omnix-font)", transition: "all 0.15s" }}
+                        onMouseEnter={e => { e.currentTarget.style.background = `${current.color}10`; }}
+                        onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                      ><Plus size={11} /> Add sub-space</button>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
+                      {current.subSpaces.map(sub => (
+                        <button key={sub.id}
+                          onClick={() => setActiveSubSpace(sub.id)}
+                          style={{
+                            borderRadius: "var(--omnix-radius-sm)", padding: "14px",
+                            background: "rgba(255,255,255,0.02)", border: `1px solid ${sub.color}20`,
+                            cursor: "pointer", textAlign: "left", transition: "all 0.15s",
+                          }}
+                          onMouseEnter={e => { e.currentTarget.style.background = `${sub.color}08`; e.currentTarget.style.borderColor = `${sub.color}40`; }}
+                          onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.02)"; e.currentTarget.style.borderColor = `${sub.color}20`; }}
+                        >
+                          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                            <div style={{ width: 10, height: 10, borderRadius: "50%", background: sub.color, boxShadow: `0 0 8px ${sub.color}80`, flexShrink: 0 }} />
+                            <span style={{ color: "var(--omnix-text)", fontSize: 13, fontWeight: 600 }}>{sub.name}</span>
+                          </div>
+                          <div style={{ color: "var(--omnix-text-3)", fontSize: 11, marginBottom: 10, lineHeight: 1.4 }}>{sub.desc}</div>
+                          <div style={{ display: "flex", gap: 8 }}>
+                            <span style={{ color: "var(--omnix-text-2)", fontSize: 11 }}>{sub.members} members</span>
+                            <span style={{ color: "var(--omnix-text-3)", fontSize: 11 }}>·</span>
+                            <span style={{ color: "var(--omnix-text-2)", fontSize: 11 }}>{sub.sources} sources</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Agents */}
+                  <div>
+                    <div style={{ color: "var(--omnix-text-2)", fontSize: 12, fontWeight: 600, marginBottom: 10, letterSpacing: "0.04em", textTransform: "uppercase" }}>Active AI Agents</div>
+                    <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+                      {current.agents.map((agent, i) => (
+                        <div key={i} style={{ borderRadius: 8, padding: "6px 14px", background: `${current.color}0f`, border: `1px solid ${current.color}25`, color: current.color, fontSize: 12, fontWeight: 500 }}>{agent} Agent</div>
+                      ))}
+                      <button style={{ borderRadius: 8, padding: "6px 14px", background: "transparent", border: "1px dashed var(--omnix-border)", color: "var(--omnix-text-3)", fontSize: 12, cursor: "pointer", fontFamily: "var(--omnix-font)", transition: "all 0.15s" }}
+                        onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(0,255,255,0.3)"; e.currentTarget.style.color = "var(--omnix-cyan)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--omnix-border)"; e.currentTarget.style.color = "var(--omnix-text-3)"; }}
+                      >+ Add Agent</button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
-          </>
+          </div>
         )}
 
         {tab === "billing" && (
@@ -166,7 +329,7 @@ export function Workspace() {
               <Crown size={24} color="var(--omnix-cyan)" />
               <div>
                 <div style={{ color: "var(--omnix-text)", fontWeight: 600, fontSize: 15, fontFamily: "var(--omnix-font-display)" }}>Current: Pro Plan</div>
-                <div style={{ color: "var(--omnix-text-3)", fontSize: 12, marginTop: 3 }}>Next billing: June 20, 2026 · $99/month</div>
+                <div style={{ color: "var(--omnix-text-3)", fontSize: 12, marginTop: 3 }}>Next billing: June 20, 2026 · $99/month · Unlimited sub-spaces</div>
               </div>
               <button style={{ marginLeft: "auto", padding: "7px 16px", borderRadius: 8, background: "transparent", border: "1px solid var(--omnix-border)", color: "var(--omnix-text-2)", fontSize: 12, cursor: "pointer", fontFamily: "var(--omnix-font)" }}>Manage Billing</button>
             </div>
@@ -190,7 +353,7 @@ export function Workspace() {
                   <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 18 }}>
                     {plan.features.map((f, j) => (
                       <div key={j} style={{ display: "flex", gap: 7, alignItems: "center" }}>
-                        <span style={{ color: plan.color, fontSize: 12 }}>✓</span>
+                        <span style={{ color: plan.color, fontSize: 12 }}>+</span>
                         <span style={{ color: "var(--omnix-text-2)", fontSize: 12 }}>{f}</span>
                       </div>
                     ))}
